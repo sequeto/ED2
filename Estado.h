@@ -19,6 +19,7 @@ class Estado
 
         void setCidade(Cidade cidade);
         Cidade getCidadeAt(int index);
+        int getNumeroCidades();
         
         void ordenaCidades();
 

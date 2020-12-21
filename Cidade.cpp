@@ -28,6 +28,7 @@ void Cidade::setCodigo(string codigo){
 
 void Cidade::setDataCasos(Data_Casos data){
     this->dataCasos.push_back(data);
+    cout << "setou" << endl;
 }
 
 Data_Casos Cidade::getDataCasoAt(int index){
@@ -36,4 +37,16 @@ Data_Casos Cidade::getDataCasoAt(int index){
 
 void Cidade::ordenaDataCasos(){
 
+}
+
+int Cidade::getNumeroCasos(){
+    return this->dataCasos.size();
+}
+
+void Cidade::setEstado(string estado){
+    this->estado = estado;
+}
+
+string Cidade::getEstado(){
+    return this->estado;
 }

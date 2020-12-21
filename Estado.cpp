@@ -26,6 +26,10 @@ Cidade Estado::getCidadeAt(int index){
     return this->cidades.at(index);
 }
 
+int Estado::getNumeroCidades(){
+    return this->cidades.size();
+;}
+
 void Estado::ordenaCidades(){
 
 }

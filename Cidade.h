@@ -22,12 +22,16 @@ class Cidade
 
         void setDataCasos(Data_Casos data);
         Data_Casos getDataCasoAt(int index);
+        int getNumeroCasos();
         
         void ordenaDataCasos();
 
+        void setEstado(string estado);
+        string getEstado();
 
     private:
         string nome;
+        string estado;
         string codigo;
         vector<Data_Casos> dataCasos;
 };
