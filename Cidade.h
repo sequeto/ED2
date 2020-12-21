@@ -20,9 +20,8 @@ class Cidade
         string getCodigo();
         void setCodigo(string codigo);
 
-        string getDataCasos();
         void setDataCasos(Data_Casos data);
-        string getDataCasoAt(int index);
+        Data_Casos getDataCasoAt(int index);
         
         void ordenaDataCasos();
 

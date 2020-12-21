@@ -11,31 +11,27 @@ Cidade::~Cidade(){
 }
 
 string Cidade::getNome(){
-
+    return this->nome;
 }
 
 void Cidade::setNome(string nome){
-
+    this->nome = nome;
 }
 
 string Cidade::getCodigo(){
-
+    return this->codigo;
 }
 
 void Cidade::setCodigo(string codigo){
-
-}
-
-string Cidade::getDataCasos(){
-
+    this->codigo = codigo;
 }
 
 void Cidade::setDataCasos(Data_Casos data){
-
+    this->dataCasos.push_back(data);
 }
 
-string Cidade::getDataCasoAt(int index){
-
+Data_Casos Cidade::getDataCasoAt(int index){
+    return this->dataCasos.at(index);
 }
 
 void Cidade::ordenaDataCasos(){
