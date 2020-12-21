@@ -11,23 +11,19 @@ Estado::~Estado(){
 }
 
 string Estado::getNome(){
-
+    return this->nome;
 }
 
 void Estado::setNome(string nome){
-
-}
-
-string Estado::getCidades(){
-
+    this->nome = nome;
 }
 
 void Estado::setCidade(Cidade cidade){
-
+    this->cidades.push_back(cidade);
 }
 
-string Estado::getCidadeAt(int index){
-
+Cidade Estado::getCidadeAt(int index){
+    return this->cidades.at(index);
 }
 
 void Estado::ordenaCidades(){

@@ -17,9 +17,8 @@ class Estado
         string getNome();
         void setNome(string nome);
 
-        string getCidades();
         void setCidade(Cidade cidade);
-        string getCidadeAt(int index);
+        Cidade getCidadeAt(int index);
         
         void ordenaCidades();
 

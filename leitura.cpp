@@ -3,6 +3,11 @@
 #include <string>
 #include <locale.h>
 
+// Inclusão dos TADs
+#include "Estado.h"
+#include "Cidade.h"
+#include "Data_Casos.h"
+
 using namespace std;
 
 // PRINCIPAL
