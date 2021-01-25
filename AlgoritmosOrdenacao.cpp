@@ -21,7 +21,9 @@ void AlgoritmosOrdenacao::merge(vector<Data_Casos> &vetor, int esq, int meio, in
     vector<Data_Casos> aux;
 
     while(i < meio && j < dir){
-        if(vetor[i].getEstado() < vetor[j].getEstado()){
+        if(vetor[i].getEstado() < vetor[j].getEstado() || 
+        vetor[i].getEstado() == vetor[j].getEstado() && vetor[i].getCidade() < vetor[j].getCidade() || 
+        vetor[i].getEstado() == vetor[j].getEstado() && vetor[i].getCidade() == vetor[j].getCidade() && vetor[i].getData() < vetor[j].getData()){
             aux.push_back(vetor[i]);
             i++;
         }

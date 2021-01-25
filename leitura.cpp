@@ -49,7 +49,7 @@ int main(){
 
     cout << "Lendo..." << endl;
     // Lendo os casos e adicionando no vetor
-    while(count < 1000000){
+    while(count < 100000){
         // cout << "Registro: " << count + 1 << endl;
         // cout << endl;
 
@@ -118,12 +118,11 @@ int main(){
 
     cout << "Ordenando..." << endl;
     AlgoritmosOrdenacao algoritmo;
-
     algoritmo.mergeSort(casos, 0, casos.size());
-
+    cout << "Ordenado" << endl;
     
     for(int i = 0; i < casos.size(); i++){
-        cout << casos[i].getData() << ", " << casos[i].getEstado() << endl;
+        cout << casos[i].getData() << ", " << casos[i].getEstado() << ", " << casos[i].getCidade() <<endl;
         // cout << casos[i].getCodigo() << endl;
         // cout << casos[i].getCidade() << endl;
         // cout << casos[i].getCasos() << endl;
