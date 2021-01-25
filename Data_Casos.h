@@ -21,11 +21,23 @@ class Data_Casos
         int getMortes();
         void setMortes(int mortes);
 
+        string getCodigo();
+        void setCodigo(string codigo);
+
+        void setEstado(string estado);
+        string getEstado();
+
+        void setCidade(string cidade);
+        string getCidade();
+
 
     private:
         string data;
         int casos;
         int mortes;
+        string cidade;
+        string codigo_cidade;
+        string estado;
 };
 
 #endif

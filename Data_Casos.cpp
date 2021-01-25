@@ -35,3 +35,27 @@ int Data_Casos::getMortes(){
 void Data_Casos::setMortes(int mortes){
     this->mortes = mortes;
 }
+
+string Data_Casos::getCodigo(){
+    return this->codigo_cidade;
+}
+
+void Data_Casos::setCodigo(string codigo){
+    this->codigo_cidade = codigo;
+}
+
+void Data_Casos::setEstado(string estado){
+    this->estado = estado;
+}
+
+string Data_Casos::getEstado(){
+    return this->estado;
+}
+
+void Data_Casos::setCidade(string cidade){
+    this->cidade = cidade;
+}
+
+string Data_Casos::getCidade(){
+    return this->cidade;
+}
