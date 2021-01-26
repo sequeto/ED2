@@ -12,11 +12,10 @@ using namespace std;
 
 class AlgoritmosOrdenacao {
     public:
-        // void quickSort(vector<Data_Casos> vetor, int esq, int dir);
+        void quickSort(vector<Data_Casos> &vetor, int esq, int dir);
         void mergeSort(vector<Data_Casos> &vetor, int esq, int dir);
     private:
         void merge(vector<Data_Casos> &vetor, int esq, int meio, int dir);
-        // int particionamento(vector<Data_Casos> vetor, int esq, int dir);
 };
 
 
