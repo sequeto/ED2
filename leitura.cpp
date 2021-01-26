@@ -1,6 +1,6 @@
 /* 
 Leitura do Arquivo - check
-Ordenação dos dados importados em dois níveis: pelo par (estado, cidade) e, dentro de cada par, por data.
+Ordenação dos dados importados em dois níveis: pelo par (estado, cidade) e, dentro de cada par, por data - check.
 Transformar os totais acumulados de casos em totais diários.
 Salvar em um novo arquivo intitulado brazil_covid19_cities_processado.csv.
 */
@@ -18,14 +18,14 @@ Salvar em um novo arquivo intitulado brazil_covid19_cities_processado.csv.
 
 using namespace std;
 
-// PRINCIPAL
+// Pré-Processamento.
 int main(){
 
     setlocale(LC_ALL, "portuguese-brazilian");  //habilita a acentuação para o português
 
     // Abrindo arquivo para leitura
     ifstream csvFile("brazil_covid19_cities.csv");
-    // ofstream saida("saida.txt");
+    ofstream out("brazil_covid19_cities_processado.csv");
 
     if(!csvFile.is_open()){
         cout << "erro";
@@ -35,7 +35,6 @@ int main(){
 
     string line;
     int deaths, cases;
-    int count = 0;
 
     // Pulando a primeira linha (header)
     getline(csvFile, line, '\n');
@@ -49,59 +48,41 @@ int main(){
 
     cout << "Lendo..." << endl;
     // Lendo os casos e adicionando no vetor
-    while(count < 100000){
-        // cout << "Registro: " << count + 1 << endl;
-        // cout << endl;
+    while(!csvFile.eof()){
 
         // Pegando Data dos dados - String
         getline(csvFile, line, ',');
-        // cout << line << ", ";
         caso.setData(line);
         line.clear();
 
         // Pegando Estado da Cidade - String
         getline(csvFile, line, ',');
-        // cout << line << ", ";
         caso.setEstado(line);
         line.clear();
 
         // Pegando Nome da Cidade - String
         getline(csvFile, line, ',');
-        // cout << line << ", ";
         caso.setCidade(line);
         line.clear();
 
         // Pegando Código Da Cidade - String
         getline(csvFile, line, ',');
-        // cout << line << ", ";
         caso.setCodigo(line);
         line.clear();
 
         // Pegando Número de Casos na data - Int
         getline(csvFile, line, ',');
         cases = atoi(line.c_str());
-        // cout << cases << ", ";
         caso.setCasos(cases);
         line.clear();
 
         // Pegando Número de Mortes na data - Int
         getline(csvFile, line, '\n');
         deaths = atoi(line.c_str());
-        // cout << deaths << endl;
         caso.setMortes(deaths);
         line.clear();
-        
-        // cout << caso.getData() << endl;
-        // cout << caso.getCasos() << endl;
-        // cout << caso.getMortes() << endl;
-        // cout << caso.getCidade() << endl;
-        // cout << caso.getCodigo() << endl;
-        // cout << caso.getEstado() << endl;
-        // cout << endl;
-
+    
         casos.push_back(caso);
-
-        count++;
     }
     cout << "Arquivo Lido" << endl;
 
@@ -120,16 +101,31 @@ int main(){
     AlgoritmosOrdenacao algoritmo;
     algoritmo.mergeSort(casos, 0, casos.size());
     cout << "Ordenado" << endl;
-    
-    for(int i = 0; i < casos.size(); i++){
-        cout << casos[i].getData() << ", " << casos[i].getEstado() << ", " << casos[i].getCidade() <<endl;
-        // cout << casos[i].getCodigo() << endl;
-        // cout << casos[i].getCidade() << endl;
-        // cout << casos[i].getCasos() << endl;
-        // cout << casos[i].getMortes() << endl;
-        // cout << endl;
-    }
 
+    // for(int i = 0; i < casos.size(); i++){
+    //     cout << casos[i].getEstado() << ", " << casos[i].getCidade() << ", " << casos[i].getData() << ", "
+    //     << casos[i].getCodigo() << ", "
+    //     << casos[i].getCasos() << ", "
+    //     << casos[i].getMortes() << endl;
+    // }
+
+    // Transformando o total acumulado em total diário.
+    int casosAcumulados;
+    int auxiliar;
+    for (int i = 0; i < casos.size(); i++)
+    {
+        if (casos[i].getData() == "2020-03-27"){
+            casosAcumulados = casos[i].getCasos();
+        }
+        else
+        {
+            auxiliar = casosAcumulados;
+            casosAcumulados = casos[i].getCasos(); // Guarda os casos acumulados do dia atual
+            casos[i].setCasos(casos[i].getCasos() - auxiliar); // Subtrai o atual dos acumulados até o dia anterior
+        }
+        
+        out << casos[i].getEstado() << ","<< casos[i].getCidade() << "," << casos[i].getData() << "," << casos[i].getCodigo() << "," << casos[i].getCasos() << "," << casos[i].getMortes() << endl;
+    }
     cout << "Pronto" << endl;
 
     csvFile.close();
