@@ -1,11 +1,3 @@
-/* 
-Leitura do Arquivo - check
-Ordenação dos dados importados em dois níveis: pelo par (estado, cidade) e, dentro de cada par, por data - check.
-Transformar os totais acumulados de casos em totais diários.
-Salvar em um novo arquivo intitulado brazil_covid19_cities_processado.csv.
-*/
-
-
 
 #include <iostream>
 #include <fstream>
@@ -40,7 +32,7 @@ int main(){
     getline(csvFile, line, '\n');
     line.clear();
 
-    // Objetos para guardar as informações do arquivo e passar para os TADS
+    // Objetos para guardar as informações do arquivo e passar para o TAD
     Data_Casos caso;
 
     // Vector que guarda todos os registros do arquivo
@@ -85,31 +77,18 @@ int main(){
         casos.push_back(caso);
     }
     cout << "Arquivo Lido" << endl;
+    csvFile.close();
 
 
-    // for(int i = 0; i < casos.size(); i++){
-    //     cout << casos[i].getData() << endl;
-    //     cout << casos[i].getEstado() << endl;
-    //     cout << casos[i].getCidade() << endl;
-    //     cout << casos[i].getCodigo() << endl;
-    //     cout << casos[i].getCasos() << endl;
-    //     cout << casos[i].getMortes() << endl;
-    //     cout << endl;
-    // }
-
+    // Realizando ordenação
     cout << "Ordenando..." << endl;
+
     AlgoritmosOrdenacao algoritmo;
     algoritmo.mergeSort(casos, 0, casos.size());
+
     cout << "Ordenado" << endl;
 
-    // for(int i = 0; i < casos.size(); i++){
-    //     cout << casos[i].getEstado() << ", " << casos[i].getCidade() << ", " << casos[i].getData() << endl;
-    //     // << casos[i].getCodigo() << ", "
-    //     // << casos[i].getCasos() << ", "
-    //     // << casos[i].getMortes() << endl;
-    // }
-
-    // Transformando o total acumulado em total diário.
+    // Transformando o total acumulado em total diário e gerando novo Arquivo.
     int casosAcumulados;
     int mortesAcumulados;
     int auxiliarCasos;
@@ -136,10 +115,8 @@ int main(){
         
         out << casos[i].getEstado() << ","<< casos[i].getCidade() << "," << casos[i].getData() << "," << casos[i].getCodigo() << "," << casos[i].getCasos() << "," << casos[i].getMortes() << endl;
     }
-    
-    cout << "Pronto" << endl;
 
-    csvFile.close();
+    cout << "Pronto" << endl;
 
     return 0;
 }
