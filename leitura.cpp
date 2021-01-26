@@ -103,29 +103,40 @@ int main(){
     cout << "Ordenado" << endl;
 
     // for(int i = 0; i < casos.size(); i++){
-    //     cout << casos[i].getEstado() << ", " << casos[i].getCidade() << ", " << casos[i].getData() << ", "
-    //     << casos[i].getCodigo() << ", "
-    //     << casos[i].getCasos() << ", "
-    //     << casos[i].getMortes() << endl;
+    //     cout << casos[i].getEstado() << ", " << casos[i].getCidade() << ", " << casos[i].getData() << endl;
+    //     // << casos[i].getCodigo() << ", "
+    //     // << casos[i].getCasos() << ", "
+    //     // << casos[i].getMortes() << endl;
     // }
 
     // Transformando o total acumulado em total diário.
     int casosAcumulados;
-    int auxiliar;
+    int mortesAcumulados;
+    int auxiliarCasos;
+    int auxiliarMortes;
     for (int i = 0; i < casos.size(); i++)
     {
         if (casos[i].getData() == "2020-03-27"){
             casosAcumulados = casos[i].getCasos();
+            mortesAcumulados = casos[i].getMortes();
         }
+
         else
         {
-            auxiliar = casosAcumulados;
+            auxiliarCasos = casosAcumulados;
             casosAcumulados = casos[i].getCasos(); // Guarda os casos acumulados do dia atual
-            casos[i].setCasos(casos[i].getCasos() - auxiliar); // Subtrai o atual dos acumulados até o dia anterior
+            casos[i].setCasos(casos[i].getCasos() - auxiliarCasos); // Subtrai o atual dos acumulados até o dia anterior
+
+
+            auxiliarMortes = mortesAcumulados;
+            mortesAcumulados = casos[i].getMortes(); // Guarda as mortes acumuladas do dia atual
+            casos[i].setMortes(casos[i].getMortes() - auxiliarMortes); // Subtrai o atual dos acumulados até o dia anterior
+
         }
         
         out << casos[i].getEstado() << ","<< casos[i].getCidade() << "," << casos[i].getData() << "," << casos[i].getCodigo() << "," << casos[i].getCasos() << "," << casos[i].getMortes() << endl;
     }
+    
     cout << "Pronto" << endl;
 
     csvFile.close();
