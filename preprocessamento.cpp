@@ -3,12 +3,62 @@
 #include <fstream>
 #include <string>
 #include <locale.h>
+#include <vector>
 
 // Inclusão dos TADs
 #include "Data_Casos.h"
 #include "AlgoritmosOrdenacao.h"
 
 using namespace std;
+
+
+void merge(vector<Data_Casos> &vetor, int esq, int meio, int dir){
+     
+    int i = esq;
+    int j = meio;
+    int k = 0;
+
+    vector<Data_Casos> aux;
+
+    while(i < meio && j < dir){
+        if(vetor[i].getEstado() < vetor[j].getEstado() || 
+        vetor[i].getEstado() == vetor[j].getEstado() && vetor[i].getCidade() < vetor[j].getCidade() || 
+        vetor[i].getEstado() == vetor[j].getEstado() && vetor[i].getCidade() == vetor[j].getCidade() && vetor[i].getData() < vetor[j].getData()){
+            aux.push_back(vetor[i]);
+            i++;
+        }
+
+        else{
+            aux.push_back(vetor[j]);
+            j++;
+        }
+    }
+
+    while(i < meio){
+        aux.push_back(vetor[i]);
+        i++;
+    }
+
+    while(j < dir){
+        aux.push_back(vetor[j]);
+        j++;
+    }
+
+    for(i = esq; i < dir; i++){
+        vetor[i] = aux[i - esq];
+    }
+
+}
+ 
+
+void mergeSort(vector<Data_Casos> &vetor, int esq, int dir){
+    if(esq < (dir-1)){
+        int meio = (esq + dir)/2;
+        mergeSort(vetor, esq, meio);
+        mergeSort(vetor, meio, dir);
+        merge(vetor, esq, meio, dir);
+    }
+}
 
 // Pré-Processamento.
 int main(){
@@ -83,8 +133,7 @@ int main(){
     // Realizando ordenação
     cout << "Ordenando..." << endl;
 
-    AlgoritmosOrdenacao algoritmo;
-    algoritmo.mergeSort(casos, 0, casos.size());
+    mergeSort(casos, 0, casos.size());
 
     cout << "Ordenado" << endl;
 

@@ -7,15 +7,16 @@
 #include <sstream>
 #include <stdlib.h>
 #include "Data_Casos.h"
+#include "DadosOrdenacao.h"
 
 using namespace std;
 
 class AlgoritmosOrdenacao {
     public:
-        void quickSort(vector<Data_Casos> &vetor, int esq, int dir);
-        void mergeSort(vector<Data_Casos> &vetor, int esq, int dir);
+        void quickSort(vector<Data_Casos>* vetor, int esq, int dir, DadosOrdenacao* dados);
+        void mergeSort(vector<Data_Casos> &vetor, int esq, int dir, DadosOrdenacao* dados);
     private:
-        void merge(vector<Data_Casos> &vetor, int esq, int meio, int dir);
+        void merge(vector<Data_Casos> &vetor, int esq, int meio, int dir, DadosOrdenacao* dados);
 };
 
 
