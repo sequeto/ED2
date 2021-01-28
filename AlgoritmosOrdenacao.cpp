@@ -3,6 +3,27 @@
 
 using namespace std;
 
+void AlgoritmosOrdenacao::shellSort(vector<Data_Casos>* vetor, int tam, DadosOrdenacao* dados) 
+{ 
+    for (int gap = tam/2; gap > 0; gap = gap / 2) 
+    { 
+        for (int i = gap; i < tam; i++)
+        {
+            Data_Casos aux = vetor->at(i);
+  
+            int j;
+            for (j = i; j >= gap && vetor->at(j - gap).getCasos() > aux.getCasos(); j = j - gap){
+                vetor->at(j) = vetor->at(j - gap);
+                dados->incrementaComparacoes();
+                dados->incrementaTrocas();
+            }
+
+            vetor->at(j) = aux;
+            dados->incrementaTrocas();
+        }
+    }
+}
+
 
 void AlgoritmosOrdenacao::quickSort(vector<Data_Casos>* vetor, int esq, int dir, DadosOrdenacao* dados){
     int i,j;
