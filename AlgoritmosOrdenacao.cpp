@@ -12,9 +12,9 @@ void AlgoritmosOrdenacao::shellSort(vector<Data_Casos>* vetor, int tam, DadosOrd
             Data_Casos aux = vetor->at(i);
   
             int j;
+            dados->incrementaComparacoes();
             for (j = i; j >= gap && vetor->at(j - gap).getCasos() > aux.getCasos(); j = j - gap){
                 vetor->at(j) = vetor->at(j - gap);
-                dados->incrementaComparacoes();
                 dados->incrementaTrocas();
             }
 
@@ -32,12 +32,12 @@ void AlgoritmosOrdenacao::quickSort(vector<Data_Casos>* vetor, int esq, int dir,
     j = dir - 1;
     pivo = vetor->at((esq + dir)/2);
     while(i<=j){
+        dados->incrementaComparacoes();
         while(vetor->at(i).getCasos() < pivo.getCasos() && i < dir){
-            dados->incrementaComparacoes();
             i++;
         }
+        dados->incrementaComparacoes();
         while(vetor->at(j).getCasos() > pivo.getCasos() && j > esq){
-            dados->incrementaComparacoes();
             j--;
         }
         if(i <= j){
