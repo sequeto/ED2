@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "xstring": "cpp",
+        "xlocale": "cpp",
+        "xiosbase": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "random": "cpp",
+        "algorithm": "cpp",
+        "initializer_list": "cpp",
+        "type_traits": "cpp",
+        "xutility": "cpp",
+        "system_error": "cpp",
+        "xlocmon": "cpp",
+        "xtr1common": "cpp",
+        "chrono": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
