@@ -1,12 +1,3 @@
-/* 
-Leitura do Arquivo - check
-Ordenação dos dados importados em dois níveis: pelo par (estado, cidade) e, dentro de cada par, por data - check.
-Transformar os totais acumulados de casos em totais diários.
-Salvar em um novo arquivo intitulado brazil_covid19_cities_processado.csv.
-*/
-
-
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -26,17 +17,15 @@ Salvar em um novo arquivo intitulado brazil_covid19_cities_processado.csv.
 
 using namespace std;
 
-// Pré-Processamento.
-int main(){
-
+int analiseAlgoritmos(){
     cout << fixed << setprecision(6);
 
     // Seed
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     // Abrindo arquivo para leitura
-    ifstream csvFile("brazil_covid19_cities.csv");
-    ofstream estatisticasOrdenacao("saida.txt");
+    ifstream csvFile("brazil_covid19_cities_processado.csv");
+    ofstream out("saida.txt");
     Processamento processamento;
 
     if(!csvFile.is_open()){
@@ -58,11 +47,19 @@ int main(){
     double inicio, fim;
     int M = 5;
     int N[5] = {10000, 50000, 100000, 500000, 1000000};
+
+    double mediaTempo = 0;
+    int mediaComp = 0;
+    int mediaTrocas = 0;
+    DadosOrdenacao dados;
+    AlgoritmosOrdenacao algoritmo;
+
     vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
 
     for(int i = 0; i < 5; i++){
         for(int j = 0; j < M; j++){
-            cout << "Tamanho: " << N[i] << endl;
+            out << "Algoritmo QuickSort" << endl;
+            out << "Tamanho: " << N[i] << endl;
 
             shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
 
@@ -72,7 +69,6 @@ int main(){
             }
 
             // Medindo Tempo de Ordenação
-            cout << "Algoritmo quickSort" << endl;
             cout << "Ordenando..." << endl;
 
             inicio = double(clock()) / CLOCKS_PER_SEC;
@@ -84,23 +80,36 @@ int main(){
             fim = double(clock()) / CLOCKS_PER_SEC;
             cout << "Ordenado" << endl;
 
-            cout << "Tempo de Execucao: " << (fim-inicio) << " Segundos" << endl;
-            cout << "Trocas: " << dados.getTrocas() <<  endl;
-            cout << "Comparacoes: " << dados.getComparacoes() << endl;
+            out << "Tempo de Execucao: " << (fim-inicio) << " Segundos" << endl;
+            out << "Trocas: " << dados.getTrocas() <<  endl;
+            out << "Comparacoes: " << dados.getComparacoes() << endl;
 
-            //Imprimindo para teste
-            // for(int m = 0; m < registrosAleatorios.size(); m++)
-            //     cout << registrosAleatorios[m].getCidade() << ", " << registrosAleatorios[m].getCasos()<< endl;
+            mediaTempo += (fim-inicio);
+            mediaComp += dados.getComparacoes();
+            mediaTrocas += dados.getTrocas();
 
             registrosAleatorios.clear();
             dados.clear();
         }
+
+        mediaTempo = mediaTempo / 5;
+        mediaComp = mediaComp / 5;
+        mediaTrocas = mediaTrocas / 5;
+
+        out << "Media de Tempo: " << mediaTempo << endl;
+        out << "Media de Comparações: " << mediaComp << endl;
+        out << "Media de Trocas: " << mediaTrocas << endl;
+
+        mediaTempo = 0;
+        mediaComp = 0;
+        mediaTrocas = 0;
     }
 
 
-    /*for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; i++){
         for(int j = 0; j < M; j++){
-            cout << "Tamanho: " << N[i] << endl;
+            out << "Algoritmo MergeSort" << endl;
+            out << "Tamanho: " << N[i] << endl;
 
             shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
 
@@ -110,34 +119,44 @@ int main(){
             }
 
             // Medindo Tempo de Ordenação
-            cout << "Algoritmo mergeSort" << endl;
             cout << "Ordenando..." << endl;
 
             inicio = double(clock()) / CLOCKS_PER_SEC;
 
-            DadosOrdenacao dados;
-            AlgoritmosOrdenacao algoritmo;
-            algoritmo.mergeSort(registrosAleatorios, 0, registrosAleatorios.size(), &dados);
+            algoritmo.mergeSort(&registrosAleatorios, 0, registrosAleatorios.size(), &dados);
 
             fim = double(clock()) / CLOCKS_PER_SEC;
             cout << "Ordenado" << endl;
 
-            cout << "Tempo de Execucao: " << (fim-inicio) << " Segundos" << endl;
-            cout << "Trocas: " << dados.getTrocas() <<  endl;
-            cout << "Comparacoes: " << dados.getComparacoes() << endl;
+            out << "Tempo de Execucao: " << (fim-inicio) << " Segundos" << endl;
+            out << "Trocas: " << dados.getTrocas() <<  endl;
+            out << "Comparacoes: " << dados.getComparacoes() << endl;
 
-            //Imprimindo para teste
-            // for(int m = 0; m < registrosAleatorios.size(); m++)
-            //     cout << registrosAleatorios[m].getCidade() << ", " << registrosAleatorios[m].getCasos()<< endl;
+            mediaTempo += (fim-inicio);
+            mediaComp += dados.getComparacoes();
+            mediaTrocas += dados.getTrocas();
 
             registrosAleatorios.clear();
             dados.clear();
         }
-    }*/
 
-    /*for(int i = 0; i < 5; i++){
+        mediaTempo = mediaTempo / 5;
+        mediaComp = mediaComp / 5;
+        mediaTrocas = mediaTrocas / 5;
+
+        out << "Media de Tempo: " << mediaTempo << endl;
+        out << "Media de Comparações: " << mediaComp << endl;
+        out << "Media de Trocas: " << mediaTrocas << endl;
+
+        mediaTempo = 0;
+        mediaComp = 0;
+        mediaTrocas = 0;
+    }
+
+    for(int i = 0; i < 5; i++){
         for(int j = 0; j < M; j++){
-            cout << "Tamanho: " << N[i] << endl;
+            out << "Algoritmo ShellSort" << endl;
+            out << "Tamanho: " << N[i] << endl;
 
             shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
 
@@ -147,7 +166,6 @@ int main(){
             }
 
             // Medindo Tempo de Ordenação
-            cout << "Algoritmo shellSort" << endl;
             cout << "Ordenando..." << endl;
 
             inicio = double(clock()) / CLOCKS_PER_SEC;
@@ -159,18 +177,30 @@ int main(){
             fim = double(clock()) / CLOCKS_PER_SEC;
             cout << "Ordenado" << endl;
 
-            cout << "Tempo de Execucao: " << (fim-inicio) << " Segundos" << endl;
-            cout << "Trocas: " << dados.getTrocas() <<  endl;
-            cout << "Comparacoes: " << dados.getComparacoes() << endl;
+            out << "Tempo de Execucao: " << (fim-inicio) << " Segundos" << endl;
+            out << "Trocas: " << dados.getTrocas() <<  endl;
+            out << "Comparacoes: " << dados.getComparacoes() << endl;
 
-            //Imprimindo para teste
-            // for(int m = 0; m < registrosAleatorios.size(); m++)
-            //     cout << registrosAleatorios[m].getCidade() << ", " << registrosAleatorios[m].getCasos()<< endl;
+            mediaTempo += (fim-inicio);
+            mediaComp += dados.getComparacoes();
+            mediaTrocas += dados.getTrocas();
 
             registrosAleatorios.clear();
             dados.clear();
         }
-    }*/
+
+        mediaTempo = mediaTempo / 5;
+        mediaComp = mediaComp / 5;
+        mediaTrocas = mediaTrocas / 5;
+
+        out << "Media de Tempo: " << mediaTempo << endl;
+        out << "Media de Comparações: " << mediaComp << endl;
+        out << "Media de Trocas: " << mediaTrocas << endl;
+
+        mediaTempo = 0;
+        mediaComp = 0;
+        mediaTrocas = 0;
+    }
 
     cout << "Pronto" << endl;
     return 0;

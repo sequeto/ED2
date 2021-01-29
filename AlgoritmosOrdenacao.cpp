@@ -3,28 +3,6 @@
 
 using namespace std;
 
-void AlgoritmosOrdenacao::shellSort(vector<Data_Casos>* vetor, int tam, DadosOrdenacao* dados) 
-{ 
-    for (int gap = tam/2; gap > 0; gap = gap / 2) 
-    { 
-        for (int i = gap; i < tam; i++)
-        {
-            Data_Casos aux = vetor->at(i);
-  
-            int j;
-            dados->incrementaComparacoes();
-            for (j = i; j >= gap && vetor->at(j - gap).getCasos() > aux.getCasos(); j = j - gap){
-                vetor->at(j) = vetor->at(j - gap);
-                dados->incrementaTrocas();
-            }
-
-            vetor->at(j) = aux;
-            dados->incrementaTrocas();
-        }
-    }
-}
-
-
 void AlgoritmosOrdenacao::quickSort(vector<Data_Casos>* vetor, int esq, int dir, DadosOrdenacao* dados){
     int i,j;
     Data_Casos pivo, aux;
@@ -57,7 +35,7 @@ void AlgoritmosOrdenacao::quickSort(vector<Data_Casos>* vetor, int esq, int dir,
     }
 }
 
-void AlgoritmosOrdenacao::merge(vector<Data_Casos> &vetor, int esq, int meio, int dir, DadosOrdenacao* dados){
+void AlgoritmosOrdenacao::merge(vector<Data_Casos>* vetor, int esq, int meio, int dir, DadosOrdenacao* dados){
      
     int i = esq;
     int j = meio;
@@ -66,14 +44,14 @@ void AlgoritmosOrdenacao::merge(vector<Data_Casos> &vetor, int esq, int meio, in
     vector<Data_Casos> aux;
 
     while(i < meio && j < dir){
-        if(vetor[i].getCasos() < vetor[j].getCasos()){
-            aux.push_back(vetor[i]);
+        if(vetor->at(i).getCasos() < vetor->at(j).getCasos()){
+            aux.push_back(vetor->at(i));
             i++;
         }
 
         else{
             dados->incrementaTrocas();
-            aux.push_back(vetor[j]);
+            aux.push_back(vetor->at(j));
             j++;
         }
 
@@ -81,27 +59,54 @@ void AlgoritmosOrdenacao::merge(vector<Data_Casos> &vetor, int esq, int meio, in
     }
 
     while(i < meio){
-        aux.push_back(vetor[i]);
+        aux.push_back(vetor->at(i));
         i++;
     }
 
     while(j < dir){
-        aux.push_back(vetor[j]);
+        aux.push_back(vetor->at(j));
         j++;
     }
 
     for(i = esq; i < dir; i++){
-        vetor[i] = aux[i - esq];
+        vetor->at(i) = aux.at(i - esq);
     }
 
 }
  
 
-void AlgoritmosOrdenacao::mergeSort(vector<Data_Casos> &vetor, int esq, int dir, DadosOrdenacao* dados){
+void AlgoritmosOrdenacao::mergeSort(vector<Data_Casos>* vetor, int esq, int dir, DadosOrdenacao* dados){
     if(esq < (dir-1)){
         int meio = (esq + dir)/2;
         mergeSort(vetor, esq, meio, dados);
         mergeSort(vetor, meio, dir, dados);
         merge(vetor, esq, meio, dir, dados);
+    }
+}
+
+
+
+void AlgoritmosOrdenacao::shellSort(vector<Data_Casos>* vetor, int tam, DadosOrdenacao* dados)
+{   
+    int i , j;
+    Data_Casos aux;
+    int gap = 1;
+    while(gap < tam) {
+        gap = 3*gap+1; 
+    }
+    while ( gap > 1) {
+        gap = gap / 3;
+        for(i = gap; i < tam; i++){
+            aux = vetor->at(i);
+            j = i - gap;
+            dados->incrementaComparacoes();
+            while (j >= 0 && aux.getCasos() < vetor->at(j).getCasos()) {
+                dados->incrementaTrocas();
+                vetor->at(j + gap) = vetor->at(j);
+                j = j - gap; 
+            }
+            dados->incrementaTrocas();
+            vetor->at(j + gap) = aux;
+        } 
     }
 }
