@@ -76,8 +76,9 @@ int analiseAlgoritmos(){
     DadosOrdenacao dados;
     AlgoritmosOrdenacao algoritmo;
 
-    vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
+    vector<Data_Casos> registrosAleatorios; // Vetor de Registros aleatórios para ordenação.
 
+    // Interações para o QuickSort
     for(int i = 0; i < M; i++){
         for(int j = 0; j < M; j++){
             out << "Algoritmo QuickSort" << endl;
@@ -85,7 +86,7 @@ int analiseAlgoritmos(){
 
             shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
 
-            // Adicionando titulos aleatórios ao vetor
+            // Adicionando N registros aleatórios ao vetor
             for(int j = 0; j < N[i]; j++){
                 registrosAleatorios.push_back(casos[j]);
             }
@@ -106,6 +107,7 @@ int analiseAlgoritmos(){
             out << "Trocas: " << dados.getTrocas() <<  endl;
             out << "Comparacoes: " << dados.getComparacoes() << endl;
 
+            // Acumulando as métricas de ordenação
             mediaTempo += (fim-inicio);
             mediaComp += dados.getComparacoes();
             mediaTrocas += dados.getTrocas();
@@ -114,6 +116,7 @@ int analiseAlgoritmos(){
             dados.clear();
         }
 
+        // Realizando cálculo da média
         mediaTempo = mediaTempo / M;
         mediaComp = mediaComp / M;
         mediaTrocas = mediaTrocas / M;
@@ -128,6 +131,7 @@ int analiseAlgoritmos(){
     }
 
 
+    // Interações para o MergeSort
     for(int i = 0; i < M; i++){
         for(int j = 0; j < M; j++){
             out << "Algoritmo MergeSort" << endl;
@@ -175,6 +179,7 @@ int analiseAlgoritmos(){
         mediaTrocas = 0;
     }
 
+    // Interações para o ShellSort
     for(int i = 0; i < M; i++){
         for(int j = 0; j < M; j++){
             out << "Algoritmo ShellSort" << endl;

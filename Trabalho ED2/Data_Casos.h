@@ -73,7 +73,7 @@ public:
     {
         this->mortes = mortes;
     }
-
+// retorna codigo da cidade
     string getCodigo()
     {
         return this->codigo_cidade;
@@ -89,6 +89,7 @@ public:
         this->estado = estado;
     }
 
+// retorna Estado da cidade
     string getEstado()
     {
         return this->estado;
@@ -99,6 +100,7 @@ public:
         this->cidade = cidade;
     }
 
+// retorna Nome da cidade
     string getCidade()
     {
         return this->cidade;

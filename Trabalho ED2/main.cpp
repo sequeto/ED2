@@ -63,7 +63,7 @@ void prefacioTrabalho() ///Capa do trabalho
     cout << "JOÃO PEDRO SEQUETO NASCIMENTO - MAT 201776022 "<< endl;
     cout << "Observação: Para executar o código segue abaixo: " << endl;
     cout << "MAC/LINUX:  clear && g++ -std=c++11 *.h *.cpp -o main && ./main brazil_covid19_cities.csv " << endl;
-    cout << "WINDOWS:    cls & g++ -std=c++11 *h *.cpp -o main & main.exe brazil_covid19_cities.csv" << endl;
+    cout << "WINDOWS:    cls & g++ -std=c++11 *h *.cpp -o main & main brazil_covid19_cities.csv" << endl;
     cout <<endl;
 }
 
@@ -148,33 +148,33 @@ void mainMenu() ///Menu contendo o que foi pedido no relatório
             while(!csvFile.eof())
             {
 
-                // Pegando Estado da Cidade - String
+                // Lendo Estado da Cidade - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Pegando Data dos dados - String
+                // Lendo Data dos dados - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Pegando Nome da Cidade - String
+                // Lendo Nome da Cidade - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Pegando Código Da Cidade - String
+                // Lendo Código Da Cidade - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Pegando Número de Casos na data - Int
+                // Lendo Número de Casos na data - Int
                 getline(csvFile, line, ',');
                 cases = atoi(line.c_str());
                 cout << cases << ", ";
                 line.clear();
 
-                // Pegando Número de Mortes na data - Int
+                // Lendo Número de Mortes na data - Int
                 getline(csvFile, line, '\n');
                 deaths = atoi(line.c_str());
                 cout << deaths << ",\n";

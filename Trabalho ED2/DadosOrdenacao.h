@@ -45,6 +45,7 @@ public:
         qntTrocas++;
     }
 
+    // Retorna Número de Trocas
     int getTrocas()
     {
         return qntTrocas;
@@ -55,11 +56,13 @@ public:
         qntComparacoes++;
     }
 
+    // Retorna número de comparações
     int getComparacoes()
     {
         return qntComparacoes;
     }
 
+    // Limpa todos os dados
     void clear()
     {
         qntComparacoes = 0;
