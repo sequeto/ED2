@@ -90,7 +90,6 @@ public:
         }
     }
 
-    // Função que lê o vetor de registros, e gera o novo arquivo com casos e mortes diários
     void gerarArquivoProcessado(vector<Data_Casos> casos, ofstream& out)
     {
         // Transformando o total acumulado em total diário e gerando novo Arquivo.
@@ -124,7 +123,6 @@ public:
 
     }
 
-    // Realiza ordenação Com MergeSort por Estado, Cidade e Data
     void ordenarRegistros(vector<Data_Casos> &vetor, int inicio, int fim)
     {
         mergeSort(vetor, inicio, fim);

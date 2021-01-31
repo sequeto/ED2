@@ -148,33 +148,33 @@ void mainMenu() ///Menu contendo o que foi pedido no relatório
             while(!csvFile.eof())
             {
 
-                // Lendo Estado da Cidade - String
+                // Pegando Estado da Cidade - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Lendo Data dos dados - String
+                // Pegando Data dos dados - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Lendo Nome da Cidade - String
+                // Pegando Nome da Cidade - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Lendo Código Da Cidade - String
+                // Pegando Código Da Cidade - String
                 getline(csvFile, line, ',');
                 cout << line << ", ";
                 line.clear();
 
-                // Lendo Número de Casos na data - Int
+                // Pegando Número de Casos na data - Int
                 getline(csvFile, line, ',');
                 cases = atoi(line.c_str());
                 cout << cases << ", ";
                 line.clear();
 
-                // Lendo Número de Mortes na data - Int
+                // Pegando Número de Mortes na data - Int
                 getline(csvFile, line, '\n');
                 deaths = atoi(line.c_str());
                 cout << deaths << ",\n";
