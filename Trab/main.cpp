@@ -14,7 +14,7 @@
     main.cpp
     *** comando pra rodar ***
     MAC/LINUX:  clear && g++ -std=c++11 *.h *.cpp  -o main && ./main brazil_covid19_cities.csv
-    WINDOWS:    cls & g++ -std=c++11 *.h *.cpp  -o main & main.exe brazil_covid19_cities.csv
+    WINDOWS:    cls & g++ -std=c++11 *.h *.cpp  -o main & main brazil_covid19_cities.csv
 
 */
 
@@ -89,7 +89,7 @@ void leitura()
 
 //Abrindo arquivo para leitura
     ifstream csvFile("brazil_covid19_cities.csv");
-    ofstream out("ArquivosProcessados/brazil_covid19_cities_processado.csv");
+    ofstream out("brazil_covid19_cities_processado.csv");
 
 //Verificando se o arquvio está aberto
     if(!csvFile.is_open())
@@ -142,7 +142,7 @@ void mainMenu() ///Menu contendo o que foi pedido no relatório
         {
             cout << "(1) - Etapa 1: Pré-processamento dos dados" << endl;
             ifstream csvFile;
-            csvFile.open("ArquivosProcessados/brazil_covid19_cities_processado.csv", ios::in);
+            csvFile.open("brazil_covid19_cities_processado.csv", ios::in);
             string line;
             int deaths, cases;
             while(!csvFile.eof())
@@ -191,7 +191,7 @@ void mainMenu() ///Menu contendo o que foi pedido no relatório
             int id;
             ifstream arquivo;
 
-            arquivo.open("ArquivosProcessados/brazil_covid19_cities.csv", ios::in);
+            arquivo.open("brazil_covid19_cities.csv", ios::in);
             moduloTeste(arquivo);
             arquivo.close();
             break;
