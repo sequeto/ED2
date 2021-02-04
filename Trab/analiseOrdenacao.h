@@ -46,7 +46,7 @@ int analiseAlgoritmos(){
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     // Abrindo arquivo para leitura
-    ifstream csvFile("ArquivosProcessados/brazil_covid19_cities_processado.csv");
+    ifstream csvFile("brazil_covid19_cities_processado.csv");
     ofstream out("saidaAnalise-de-Algoritmos-de-ordenacao.txt");
     Processamento processamento;
 
