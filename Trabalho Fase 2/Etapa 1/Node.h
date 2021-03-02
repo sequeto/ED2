@@ -22,6 +22,9 @@ class Node
         Node* getNW();
         Node* getNE();
 
+        int getCoordX();
+        int getCoordY();
+
         // Setters
         void setInfo(int info);
         
@@ -31,11 +34,16 @@ class Node
         void setSW(Node sw);
         void setSE(Node se);
 
+        void setCoordX(int x);
+        void setCoordY(int y);
+
     private:
         Node* nw;
         Node* ne;
         Node* sw;
-        Node* se;
+        Node* se;,
+        int coordx;
+        int coordy;
         int info;
 
 };
