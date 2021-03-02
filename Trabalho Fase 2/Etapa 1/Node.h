@@ -5,8 +5,6 @@
 
 using namespace std;
 
-// Classe Nó para Lista Encadeada de Inteiros
-
 class Node
 {
     public:
@@ -28,11 +26,11 @@ class Node
         // Setters
         void setInfo(int info);
         
-        void setNW(Node nw);
-        void setNE(Node ne);
+        void setNW(Node* nw);
+        void setNE(Node* ne);
 
-        void setSW(Node sw);
-        void setSE(Node se);
+        void setSW(Node* sw);
+        void setSE(Node* se);
 
         void setCoordX(int x);
         void setCoordY(int y);
@@ -41,7 +39,7 @@ class Node
         Node* nw;
         Node* ne;
         Node* sw;
-        Node* se;,
+        Node* se;
         int coordx;
         int coordy;
         int info;

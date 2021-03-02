@@ -16,15 +16,14 @@ class QuadTree
 
         int getRoot(); // Retorna valor na Raiz da Árvore
         bool isEmpty(); // Verifica se Árvore está vazia
-        bool search(int value); // Verifica se o valor está na Árvore
-        void insert(int value); // Insere um elemento na árvore com o valor definido
+        // bool search(int value); // Verifica se o valor está na Árvore
+        // void insert(int value); // Insere um elemento na árvore com o valor definido
 
 
     private:
-        Node root;
         Node* root; // Ponteiro para o nó raiz
-        bool auxSearch(Node* p, int value);
-        Node* auxInsert(Node* p, int value);
+        // bool auxSearch(Node* p, int value);
+        // Node* auxInsert(Node* p, int value);
         Node* free(Node* p);
 };
 

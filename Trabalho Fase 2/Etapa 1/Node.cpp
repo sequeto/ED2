@@ -42,19 +42,19 @@ void Node::setInfo(int info){
     this->info = info;
 }
 
-void Node::setNW(Node nw){
+void Node::setNW(Node* nw){
     this->nw = nw;
 }
 
-void Node::setNE(Node ne){
+void Node::setNE(Node* ne){
     this->ne = ne;
 }
 
-void Node::setSW(Node sw){
+void Node::setSW(Node* sw){
     this->sw = sw;
 }
 
-void Node::setSE(Node se){
+void Node::setSE(Node* se){
     this->se = se;
 }
 

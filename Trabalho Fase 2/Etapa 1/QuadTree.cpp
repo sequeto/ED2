@@ -38,43 +38,43 @@ bool QuadTree::isEmpty(){
 }
 
 // -----------------------------------------------------------
-// Verifica se o valor está na Árvore
-bool QuadTree::search(int value){
-    return auxSearch(this->root, value);
-}
+// // Verifica se o valor está na Árvore
+// bool QuadTree::search(int value){
+//     return auxSearch(this->root, value);
+// }
 
-// -----------------------------------------------------------
-bool QuadTree::auxSearch(Node* p, int value){
-    if(p == NULL){
-        return false;
-    }
+// // -----------------------------------------------------------
+// bool QuadTree::auxSearch(Node* p, int value){
+//     if(p == NULL){
+//         return false;
+//     }
 
-    else if(p->getInfo() == value){
-        return true;
-    }
+//     else if(p->getInfo() == value){
+//         return true;
+//     }
 
-    else{
-        // Implementar
-    }
-}
+//     else{
+//         // Implementar
+//     }
+// }
 
-// -----------------------------------------------------------
-// Insere um elemento na árvore com o valor definido
-void QuadTree::insert(int value){
-    this->root = auxInsert(this->root, value);
-}
+// // -----------------------------------------------------------
+// // Insere um elemento na árvore com o valor definido
+// void QuadTree::insert(int value){
+//     this->root = auxInsert(this->root, value);
+// }
 
-// -----------------------------------------------------------
-Node* QuadTree::auxInsert(Node* p, int value){
-    if(p == NULL){
-        p = new Node();
-        p->setInfo(value);
-        // Implementar
-    }
+// // -----------------------------------------------------------
+// Node* QuadTree::auxInsert(Node* p, int value){
+//     if(p == NULL){
+//         p = new Node();
+//         p->setInfo(value);
+//         // Implementar
+//     }
 
-    else {
-        // Implementar
-    }
+//     else {
+//         // Implementar
+//     }
 
-    return p;
-}
+//     return p;
+// }
