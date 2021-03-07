@@ -1,6 +1,8 @@
 #include <iostream>
+#include <string>
 #include "QuadTree.h"
 #include "Node.h"
+#include "City.h"
 
 using namespace std;
 
@@ -20,14 +22,14 @@ QuadTree::~QuadTree(){
 
 // -----------------------------------------------------------
 // Retorna valor na Raiz da Árvore
-int QuadTree::getRoot(){
+string QuadTree::getRoot(){
     if(this->root == NULL){
         cout << "Arvore Vazia" << endl;
-        return -1;
+        return "vazia";
     }
 
     else{
-        return this->root->getInfo();
+        return this->root->getCity()->getName();
     }
 }
 
@@ -38,7 +40,7 @@ bool QuadTree::isEmpty(){
 }
 
 // -----------------------------------------------------------
-// // Verifica se o valor está na Árvore
+// Verifica se o valor está na Árvore
 // bool QuadTree::search(int value){
 //     return auxSearch(this->root, value);
 // }
@@ -58,23 +60,97 @@ bool QuadTree::isEmpty(){
 //     }
 // }
 
+
+string QuadTree::comparaQuadrantes(Node* r, City* p){
+    string quadrante = "";
+    if(p->getLatitude() < r->getCoordX()){
+        if(p->getLongitude() < r->getCoordY()){
+            quadrante = "SW";
+        }
+        else{
+            quadrante = "NW";
+        }
+    }
+    else{
+        if(p->getLongitude() < r->getCoordY()){
+            quadrante = "SE";
+        }
+        else{
+            quadrante = "NE";
+        }
+    }
+
+    return quadrante;
+}
+
 // // -----------------------------------------------------------
 // // Insere um elemento na árvore com o valor definido
-// void QuadTree::insert(int value){
-//     this->root = auxInsert(this->root, value);
-// }
+void QuadTree::insert(City* city){
+    this->root = auxInsert(this->root, city);
+}
 
-// // -----------------------------------------------------------
-// Node* QuadTree::auxInsert(Node* p, int value){
-//     if(p == NULL){
-//         p = new Node();
-//         p->setInfo(value);
-//         // Implementar
-//     }
+// -----------------------------------------------------------
+Node* QuadTree::auxInsert(Node* p, City* city){
+    if(p == NULL){
+        p = new Node();
+        p->setCity(city);
+        p->setCoordX(city->getLatitude());
+        p->setCoordY(city->getLongitude());
+        p->setSW(NULL);
+        p->setSE(NULL);
+        p->setNW(NULL);
+        p->setNE(NULL);
+    }
 
-//     else {
-//         // Implementar
-//     }
+    else {
+        string quadrante = this->comparaQuadrantes(p, city);
+        if(quadrante == "SW"){
+            p->setSW(auxInsert(p->getSW(), city));
+        }
 
-//     return p;
-// }
+        else if(quadrante == "SE"){
+            p->setSE(auxInsert(p->getSE(), city));
+        }
+
+        else if(quadrante == "NW"){
+            p->setNW(auxInsert(p->getNW(), city));
+        }
+
+        else{
+            p->setNE(auxInsert(p->getNE(), city));
+        }
+    }
+
+    return p;
+}
+
+
+
+
+
+
+
+
+void QuadTree::imprime()
+{
+    cout << endl << endl;
+    cout << "******************** ARVORE **************************" << endl << endl;
+    auxImprime(this->root, 0);
+    cout << endl << endl;
+    cout << "******************************************************";
+    cout << endl << endl;
+}
+
+void QuadTree::auxImprime(Node* p, int k)
+{
+    if(p != NULL)
+    {
+        auxImprime(p->getNE(), k+1);
+        auxImprime(p->getNW(), k+1);
+        for(int i = 0; i < k; i++)
+            cout << '\t';
+        cout << p->getCity()->getName() << endl;
+        auxImprime(p->getSW(), k+1);
+        auxImprime(p->getSE(), k+1);
+    }
+}

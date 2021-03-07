@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Node.h"
+#include "City.h"
 
 Node::Node(){
 
@@ -9,8 +10,8 @@ Node::~Node(){
 }
 
 // Getters
-int Node::getInfo(){
-    return this->info;
+City* Node::getCity(){
+    return this->city;
 }
 
 Node* Node::getSW(){
@@ -38,8 +39,8 @@ int Node::getCoordY(){
 }
 
 // Setters
-void Node::setInfo(int info){
-    this->info = info;
+void Node::setCity(City* city){
+    this->city = city;
 }
 
 void Node::setNW(Node* nw){

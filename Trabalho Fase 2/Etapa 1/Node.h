@@ -1,6 +1,8 @@
 #ifndef NODE_H_INCLUDED
 #define NODE_H_INCLUDED
 
+#include "City.h"
+
 #include <iostream>
 
 using namespace std;
@@ -12,7 +14,7 @@ class Node
         virtual ~Node();
         
         // Getters
-        int getInfo();
+        City* getCity();
 
         Node* getSW();
         Node* getSE();
@@ -24,7 +26,7 @@ class Node
         int getCoordY();
 
         // Setters
-        void setInfo(int info);
+        void setCity(City* city);
         
         void setNW(Node* nw);
         void setNE(Node* ne);
@@ -42,7 +44,7 @@ class Node
         Node* se;
         int coordx;
         int coordy;
-        int info;
+        City* city;
 
 };
 

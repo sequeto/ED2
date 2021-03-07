@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include "City.h"
+#include "QuadTree.h"
 
 using namespace std;
 
@@ -61,7 +62,16 @@ void lerArquivo(City* cidades, ifstream& file)
     }
 }
 
-void leitura()
+void inserirNaQuadTree(QuadTree* tree, City* cidades, int tam){
+    // Inserção Na Árvore QuadTree
+    City* city;
+    for(int i = 0; i < tam; i++){
+        city = &cidades[i];
+        tree->insert(city);
+    }
+}
+
+void leituraInsercao()
 {
     //Abrindo arquivo para leitura
     ifstream csvFile("brazil_cities_coordinates.csv");
@@ -82,21 +92,19 @@ void leitura()
     cout << "Arquivo Lido" << endl;
     csvFile.close();
 
-    
+    QuadTree* quadtree = new QuadTree();
 
-    for(int i=0; i < 5570; i++){
-        cout << cidades[i].getLatitude() << endl;
-    }
+    inserirNaQuadTree(quadtree, cidades, 20);
+    quadtree->imprime();
     
     // Leitura finalizada
     cout << "Pronto" << endl;
 
     delete [] cidades;
-    
 }
 
 
 
 int main(){
-    leitura();
+    leituraInsercao();
 }

@@ -6,6 +6,12 @@
 
 using namespace std;
 
+/*
+Latitude - Coord X 
+Longitude - Coord Y 
+
+*/
+
 class City
 {
     public:
