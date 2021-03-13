@@ -31,132 +31,66 @@
 #include "QuadTree.h"
 #include "City.h"
 #include "Hash.h"
+#include "Data_Casos.h"
+#include "Utils.h"
 
+/*
+Nesta etapa, você irá comparar o desempenho da operação de busca nas estruturas
+implementadas. Para cada estrutura, o seu programa deverá selecionar conjuntos de N
+registros aleatórios da tabela hash e inseri-los na estrutura. Você deverá inserir apenas o
+código hash na árvore. Os outros campos do registro serão obtidos acessando a posição
+correspondente na tabela hash. Após as inserções, você deverá realizar as duas buscas
+indicadas abaixo.
+S1) Obter o total de casos de uma cidade;
+S2) Obter o total de casos nas cidades contidas no intervalo [(x0
+, y0
+), (x1
+, y1
+)], onde x0
+e x1 são latitudes e y0 e y1 são longitudes.
+Note que, para a busca S2, será necessário combinar os dados da quad tree com os dados
+da árvore balanceada, ou seja, você deverá primeiro obter a lista de cidades no intervalo e
+depois procurá-las na estrutura. Os totais de casos podem ser obtidos consultando o
+registro na tabela hash. Permita ao usuário fornecer os dados necessários para as
+buscas S1 e S2.
+Durante as buscas, deverão ser computados o total de comparações de chaves realizadas.
+Além disso, os tempos de execução das inserções e das buscas deverão ser medidos. Para
+gerar as estatísticas de desempenho, você deverá executar os passos acima para M
+diferentes conjuntos de N registros aleatórios. Minimamente, utilize M = 5. Ao final, compute
+as médias de cada uma das métricas (comparações e tempo). Salve todos os resultados
+obtidos em um arquivo saida.txt, contendo tanto os resultados individuais quanto a média
+final.
+Você deverá realizar a simulação descrita acima para os seguintes valores de N:
+10.000
+DCC012 – Estruturas de Dados II
+50.000
+100.000
+500.000
+1.000.000
+Assim, em resumo, para cada valor de N, você deve importar M conjuntos distintos de N
+registros aleatórios, realizar B buscas e computar métricas conforme especificado. As
+estruturas de dados que devem ser implementadas são as seguintes:
+*/
 using namespace std;
 
+int main(){
+    Utils utils;
+    QuadTree* quadtree = new QuadTree();
+    AVLTree* avlt = new AVLTree();
+    ArvoreB* avb = new ArvoreB(20);
+    ArvoreB* avb2 = new ArvoreB(200);
 
-// Função para leitura do arquivo CSV
-void lerArquivoProcessado(vector<Data_Casos>* casos, ifstream& file)
-{
-    // Variaveis para guardar as informações do arquivo e passar para a classe
-    Data_Casos caso;
-    string line;
+    // Variaveis auxiliares
+    string codigo;
+    string data;
+    int codHash;
 
-    // Pulando a primeira linha (header)
-    getline(file, line, '\n');
-    line.clear();
-
-    while(!file.eof())
-    {
-
-        // Lendo Data dos dados - String
-        getline(file, line, ',');
-        caso.setEstado(line);
-        line.clear();
-
-        // Lendo Estado da Cidade - String
-        getline(file, line, ',');
-        caso.setCidade(line);
-        line.clear();
-
-        // Lendo Nome da Cidade - String
-        getline(file, line, ',');
-        caso.setData(line);
-        line.clear();
-
-        // Lendo Código Da Cidade - String
-        getline(file, line, ',');
-        caso.setCodigo(line);
-        line.clear();
-
-        // Lendo Número de Casos na data - Int
-        getline(file, line, ',');
-        caso.setCasos(atoi(line.c_str()));
-        line.clear();
-
-        // Lendo Número de Mortes na data - Int
-        getline(file, line, '\n');
-        caso.setMortes(atoi(line.c_str()));
-        line.clear();
-
-        casos->push_back(caso);
-    }
-}
-
-// Função para leitura do arquivo CSV Coordinates
-void lerArquivo(City* cidades, ifstream& file)
-{
-    // Variaveis para guardar as informações do arquivo e passar para a classe
-    // 5571
-    int count = 0;
-    string line;
-
-    // Pulando a primeira linha (header)
-    getline(file, line, '\n');
-    line.clear();
-
-    while(!file.eof())
-    {
-
-        // Lendo codigo do estado - int
-        getline(file, line, ',');
-        cidades[count].setState(atoi(line.c_str()));
-        line.clear();
-
-        // Lendo codigo da Cidade - int
-        getline(file, line, ',');
-        cidades[count].setCity(atoi(line.c_str()));
-        line.clear();
-
-        // Lendo Nome da Cidade - String
-        getline(file, line, ',');
-        cidades[count].setName(line);
-        line.clear();
-
-        // Lendo latitude Da Cidade - float
-        getline(file, line, ',');
-        cidades[count].setLatitude(atof(line.c_str()));
-        line.clear();
-
-        // Lendo longitude Da Cidade - float
-        getline(file, line, ',');
-        cidades[count].setLongitude(atof(line.c_str()));
-        line.clear();
-
-        // Lendo Se a cidade é capital - bool
-        getline(file, line, '\n');
-        if(line == "FALSE"){
-            cidades[count].setCapital(false);
-        }
-
-        else{
-            cidades[count].setCapital(true);
-        }
-
-        line.clear();
-
-        count++;
-    }
-}
-
-void inserirNaQuadTree(QuadTree* tree, City* cidades, int tam){
-    // Inserção Na Árvore QuadTree
-    City* city;
-    for(int i = 0; i < tam; i++){
-        city = &cidades[i];
-        tree->insert(city);
-    }
-}
-
-QuadTree* Etapa1()
-{
-
-    cout << "Etapa 1" << endl; 
+    // Inserindo na QuadTree
     //Abrindo arquivo para leitura
-    ifstream csvFile("brazil_cities_coordinates.csv");
+    ifstream coordFile("brazil_cities_coordinates.csv");
 
     //Verificando se o arquvio está aberto
-    if(!csvFile.is_open())
+    if(!coordFile.is_open())
     {
         cout << "erro";
         exit (1);
@@ -167,72 +101,74 @@ QuadTree* Etapa1()
 
     //Lendo os registros e adicionando no vetor
     cout << "Lendo..." << endl;
-    lerArquivo(cidades, csvFile);
+    utils.lerArquivoCoordenadas(cidades, coordFile);
+    cout << "Arquivo Lido" << endl;
+    coordFile.close();
+
+    utils.inserirNaQuadTree(quadtree, cidades, 5570);
+
+    cout << fixed << setprecision(6);
+
+    // Seed
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    // Abrindo arquivo para leitura
+    ifstream csvFile("brazil_covid19_cities_processado.csv");
+    ofstream out("saidaAnalise.txt");
+
+    if(!csvFile.is_open()){
+        cout << "erro";
+        return 1;
+    }
+
+    // Vector que guarda todos os registros do arquivo
+    vector<Data_Casos> casos;
+
+    // Lendo os casos e adicionando no vetor
+    cout << "Lendo..." << endl;
+    utils.lerArquivoProcessado(&casos, csvFile);
     cout << "Arquivo Lido" << endl;
     csvFile.close();
 
-    QuadTree* quadtree = new QuadTree();
+    // Análise
+    double inicio, fim;
+    int M = 5;
+    int N[5] = {10000, 50000, 100000, 500000, 1000000};
 
-    inserirNaQuadTree(quadtree, cidades, 5570);
+    double mediaTempo = 0;
+
+    vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
+    Hash* hash;
+
+    for(int i = 0; i < M; i++){
+        for(int j = 0; j < M; j++){
+            out << "Tamanho: " << N[i] << endl;
+            hash = new Hash(N[i]);
+
+            shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
+
+            // Adicionando titulos aleatórios ao vetor
+            for(int j = 0; j < N[i]; j++){
+                registrosAleatorios.push_back(casos[j]);
+            }
+
+            for(int j = 0; j < N[i]; j++){
+                hash->insere(&casos[j]);
+            }
+
+            for(int i = 0; i < N[i]; i++){
+                data = casos[i].getData();
+                codigo = casos[i].getCodigo();
+                codHash = hash->funcaoHash(data, codigo);
+                avlt->insercao(codHash);
+                avb->insert(codHash);
+            }
+
+            cout << "Digite o codigo da cidade e data para busca: " << endl;
+            cin >> codigo;
+            cin >> data;
+        }
+        registrosAleatorios.clear();
+    }
     
-    // Leitura finalizada
-    cout << "Pronto" << endl;
-    delete [] cidades;
-
-    return quadtree;
-}
-
-
-Hash* Etapa2()
-{
-
-    cout << "Etapa 2" << endl; 
-    //Abrindo arquivo para leitura
-    ifstream csvFile("brazil_covid19_cities_processado.csv");
-
-    vector<Data_Casos> casos;
-    Hash* hash = new Hash(1431489);
-
-    lerArquivoProcessado(&casos, csvFile);
-    for(int i = 0; i < 1431489; i++){
-        hash->insere(&casos[i]);
-    }
-
-    cout << "Finalizado" << endl;
-    return hash;
-}
-
-void Etapa3()
-{
-
-    cout << "Etapa 3" << endl; 
-    //Abrindo arquivo para leitura
-    ifstream csvFile("brazil_covid19_cities_processado.csv");
-
-    string codigo;
-    string data;
-    int codHash;
-    AVLTree* avlt = new AVLTree();
-    ArvoreB* avb = new ArvoreB(20);
-
-    vector<Data_Casos> casos;
-    Hash* hash = new Hash(1431489);
-
-    lerArquivoProcessado(&casos, csvFile);
-
-    for(int i = 0; i < 1431489; i++){
-        data = casos[i].getData();
-        codigo = casos[i].getCodigo();
-        codHash = hash->funcaoHash(data, codigo);
-        avlt->insercao(codHash);
-        avb->insert(codHash);
-    }
-
-    cout << "Finalizado" << endl;
-}
-
-int main(){
-    QuadTree* qt = Etapa1();
-    Hash* hash = Etapa2();
-    Etapa3();
 }

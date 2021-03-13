@@ -59,7 +59,7 @@ void teste(int N, int opcao){
     }
 }
 
-int main(){
+int moduloTeste(){
     int opcao=0;
     while(opcao != -1){
         cout << "Selecione Uma Opcao: " << endl;
@@ -77,5 +77,7 @@ int main(){
     
         cout << "Aperte 1 para retornar ao menu ou -1 para sair" << endl;
         cin >> opcao;
-   }       
+   }     
+
+   return 0;  
 }
