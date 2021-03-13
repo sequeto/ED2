@@ -1,7 +1,7 @@
 /**
     Universidade Federal de Juiz de Fora
     Contador.h
-    Propósito: Registra contagem da arvore b.
+    Propósito: Classe para implementar o NoB usando inteiros como chave
     @author Ivanylson HG
   
 */

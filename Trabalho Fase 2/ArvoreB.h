@@ -1,7 +1,7 @@
 /**
     Universidade Federal de Juiz de Fora
     Contador.h
-    Propósito: Registra contagem da arvore b.
+    Propósito: Classe para implementar a arvore B
     @author Ivanylson HG
   
 */
