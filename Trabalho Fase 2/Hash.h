@@ -10,7 +10,7 @@ class Hash
         virtual ~Hash();
         int funcaoHash(string data, string codigo);
         void insere(Data_Casos* registros);
-        No* busca(int key, Data_Casos* data);
+        No* busca(Data_Casos* data);
     
 
     private:

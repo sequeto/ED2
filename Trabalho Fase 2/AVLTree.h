@@ -1,3 +1,6 @@
+#ifndef AVLTREE_H_INCLUDED
+#define AVLTREE_H_INCLUDED
+
 #include "NodeAVL.h"
 
 class AVLTree{
@@ -22,3 +25,5 @@ class AVLTree{
         NodeAVL*  rotacaoDireita(NodeAVL* p);
         NodeAVL*  rotacaoEsquerda(NodeAVL* p);
 };
+
+#endif //

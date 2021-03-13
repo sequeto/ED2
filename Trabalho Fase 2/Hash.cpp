@@ -44,7 +44,7 @@ void Hash::insere(Data_Casos* data){
 }
 
 
-No* Hash::busca(int key, Data_Casos* data) {
+No* Hash::busca(Data_Casos* data) {
     No* elemento;
     int index = funcaoHash(data->getData(), data->getCodigo());
 
