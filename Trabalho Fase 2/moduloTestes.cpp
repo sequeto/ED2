@@ -32,8 +32,23 @@
 #include "AVLTree.h"
 #include "QuadTree.h"
 #include "City.h"
+#include "Hash.h"
 
 using namespace std;
+
+void embaralhar(City* vet, int tam)
+{
+    City temp;
+    int r;
+	for (int i = 0; i < tam; i++)
+	{
+		r = rand() % tam;
+
+		temp = vet[i];
+		vet[i] = vet[r];
+		vet[r] = temp;
+	}
+}
 
 // Função para leitura do arquivo CSV
 void lerArquivo(City* cidades, ifstream& file)
@@ -118,7 +133,7 @@ void leituraInsercaoQuadTree(int n)
 
     //Vetor que guarda todos os registros do arquivo
     City* cidades = new City[5570];
-    // City* cidadesAleatorias = new City[n];
+    City* cidadesAleatorias = new City[n];
 
     //Lendo os registros e adicionando no vetor
     cout << "Lendo..." << endl;
@@ -126,10 +141,12 @@ void leituraInsercaoQuadTree(int n)
     cout << "Arquivo Lido" << endl;
     csvFile.close();
 
-    // // Adicionando titulos aleatórios ao vetor
-    // for(int j = 0; j < n; j++){
-    //     cidadesAleatorias[j] = cidades[j];
-    // }
+    embaralhar(cidades, 5570);
+
+    // Adicionando titulos aleatórios ao vetor
+    for(int j = 0; j < n; j++){
+        cidadesAleatorias[j] = cidades[j];
+    }
 
     QuadTree* quadtree = new QuadTree();
 
@@ -159,6 +176,15 @@ void teste(int N, int opcao){
 
 int main(){
 
+    string data = "27-03-2020";
+    cout << data << endl;
+    data.replace(2,1,"");
+    data.replace(4,1,"");
+    cout << data << endl;
+    int dataConv = stoi(data);
+    cout << dataConv << endl;
+
+    
     int opcao=0;
     while(opcao != -1){
         cout << "Selecione Uma Opcao: " << endl;
