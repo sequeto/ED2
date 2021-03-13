@@ -8,8 +8,8 @@ class Hash
     public:
         Hash(int tamanho);
         virtual ~Hash();
-        int funcaoHash(int tamanho, string data, string codigo);
-        void insere(Data_Casos* registros, int tamanho);
+        int funcaoHash(string data, string codigo);
+        void insere(Data_Casos* registros);
         No* busca(int key, Data_Casos* data);
     
 

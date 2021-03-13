@@ -21,21 +21,19 @@ Hash::~Hash() {
 }
 
 int Hash::funcaoHash(string data, string codigo){
-    // 27-03-2020
     int cod = stoi(codigo);
-    data.replace(2,1,"");
     data.replace(4,1,"");
+    data.replace(6,1,"");
     int dataConv = stoi(data);
 
-    int soma = cod + data;
-    int index = (soma % 5) % this->tamanho;
-    
+
+    int soma = (cod + dataConv);
+    int index = (soma % this->tamanho);
     return index;
 }
 
-void Hash::insere(Data_Casos* data, int tamanho){
-    //fazer o tratamento de colis�o
-    int index = funcaoHash(tamanho, data->getData(), data->getCodigo());
+void Hash::insere(Data_Casos* data){
+    int index = funcaoHash(data->getData(), data->getCodigo());
     No* elemento;
 
     elemento = registros[index]->busca(data);
@@ -48,7 +46,7 @@ void Hash::insere(Data_Casos* data, int tamanho){
 
 No* Hash::busca(int key, Data_Casos* data) {
     No* elemento;
-    int index = funcaoHash(tamanho, data->getData(), data->getCodigo());
+    int index = funcaoHash(data->getData(), data->getCodigo());
 
     elemento = registros[index]->busca(data);
     return elemento;
