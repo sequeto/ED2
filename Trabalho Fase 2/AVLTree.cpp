@@ -1,5 +1,6 @@
 #include <iostream>
 #include "AVLTree.h"
+#include "NodeAVL.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ bool AVLTree::busca(int info){
     return auxBusca(this->raiz, info);
 }
 
-bool AVLTree::auxBusca(Node* p, int info){
+bool AVLTree::auxBusca(NodeAVL* p, int info){
     if(p == NULL){
         return false;
     }
@@ -35,8 +36,8 @@ bool AVLTree::auxBusca(Node* p, int info){
     }
 }
 
-Node*  AVLTree::rotacaoEsquerda(Node * p){
-	Node* q = p->getDir();
+NodeAVL*  AVLTree::rotacaoEsquerda(NodeAVL * p){
+	NodeAVL* q = p->getDir();
 	p->setDir(q->getEsq());
 	q->setEsq(p);
     p->setFatorBalanceamento(auxGetAltura(p->getDir()) - auxGetAltura(p->getEsq()));
@@ -44,8 +45,8 @@ Node*  AVLTree::rotacaoEsquerda(Node * p){
     return q;
 }
 
-Node*  AVLTree::rotacaoDireita(Node * p){
-	Node * q = p->getEsq();
+NodeAVL*  AVLTree::rotacaoDireita(NodeAVL * p){
+	NodeAVL * q = p->getEsq();
 	p->setEsq(q->getDir());
 	q->setDir(p);
     p->setFatorBalanceamento(auxGetAltura(p->getDir()) - auxGetAltura(p->getEsq()));
@@ -57,7 +58,7 @@ int AVLTree::getAltura(){
     return auxGetAltura(this->raiz);
 } 
 
-int AVLTree::auxGetAltura(Node* p){
+int AVLTree::auxGetAltura(NodeAVL* p){
 
     if(p == NULL)
         return -1;
@@ -78,9 +79,9 @@ void AVLTree::insercao(int value){
 }
 
 // -----------------------------------------------------------
-Node* AVLTree::auxInsercao(Node* p, Node* pai, int value){
+NodeAVL* AVLTree::auxInsercao(NodeAVL* p, NodeAVL* pai, int value){
     if(p == NULL){
-        p = new Node();
+        p = new NodeAVL();
         p->setInfo(value);
         p->setEsq(NULL);
         p->setDir(NULL);
@@ -101,7 +102,7 @@ Node* AVLTree::auxInsercao(Node* p, Node* pai, int value){
     return verificaBalanceamento(p);
 }
 
-Node* AVLTree::verificaBalanceamento(Node* p)
+NodeAVL* AVLTree::verificaBalanceamento(NodeAVL* p)
 {
     if(p->getFatorBalanceamento() >= 2){
         if(p->getDir()->getFatorBalanceamento() == 1 || p->getDir()->getFatorBalanceamento() == 0){
@@ -135,7 +136,7 @@ void AVLTree::imprime()
     cout << endl << endl;
 }
 
-void AVLTree::auxImprime(Node* p, int k)
+void AVLTree::auxImprime(NodeAVL* p, int k)
 {
     if(p != NULL)
     {

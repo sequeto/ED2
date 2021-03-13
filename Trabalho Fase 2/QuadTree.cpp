@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "QuadTree.h"
-#include "Node.h"
+#include "NodeQ.h"
 #include "City.h"
 
 using namespace std;
@@ -46,7 +46,7 @@ bool QuadTree::isEmpty(){
 // }
 
 // // -----------------------------------------------------------
-// bool QuadTree::auxSearch(Node* p, int value){
+// bool QuadTree::auxSearch(NodeQ* p, int value){
 //     if(p == NULL){
 //         return false;
 //     }
@@ -61,7 +61,7 @@ bool QuadTree::isEmpty(){
 // }
 
 
-string QuadTree::comparaQuadrantes(Node* r, City* p){
+string QuadTree::comparaQuadrantes(NodeQ* r, City* p){
     string quadrante = "";
     if(p->getLatitude() < r->getCoordX()){
         if(p->getLongitude() < r->getCoordY()){
@@ -90,9 +90,9 @@ void QuadTree::insert(City* city){
 }
 
 // -----------------------------------------------------------
-Node* QuadTree::auxInsert(Node* p, City* city){
+NodeQ* QuadTree::auxInsert(NodeQ* p, City* city){
     if(p == NULL){
-        p = new Node();
+        p = new NodeQ();
         p->setCity(city);
         p->setCoordX(city->getLatitude());
         p->setCoordY(city->getLongitude());
@@ -141,7 +141,7 @@ void QuadTree::imprime()
     cout << endl << endl;
 }
 
-void QuadTree::auxImprime(Node* p, int k)
+void QuadTree::auxImprime(NodeQ* p, int k)
 {
     if(p != NULL)
     {
