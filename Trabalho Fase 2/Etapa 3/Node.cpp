@@ -2,14 +2,9 @@
 #include "Node.h"
 
 
-Node::Node(int info){
-    this->fatorBalanceamento = 0; 
-    this->info = info;
-    this->pai = NULL;
-    this->esq = NULL;
-    this->dir = NULL;
-}
+Node::Node(){
 
+}
 
 Node::~Node(){
     
@@ -29,9 +24,6 @@ Node* Node::getEsq(){
 Node* Node::getDir(){ 
     return this->dir;
 }
-Node* Node::getPai(){ 
-    return this->pai;
-}
 
 void Node::setInfo(int info){ 
     this->info = info;
@@ -47,9 +39,5 @@ void Node::setEsq(Node* p){
 
 void Node::setDir(Node* p){ 
     this->dir = p;
-}
-
-void Node::setPai(Node* p){ 
-    this->pai = p;
 }
 
