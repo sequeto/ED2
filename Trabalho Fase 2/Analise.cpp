@@ -71,7 +71,7 @@ Assim, em resumo, para cada valor de N, você deve importar M conjuntos distinto
 registros aleatórios, realizar B buscas e computar métricas conforme especificado. As
 estruturas de dados que devem ser implementadas são as seguintes:
 */
-using namespace std;
+// using namespace std;
 
 int main(){
     Utils utils;
@@ -84,6 +84,7 @@ int main(){
     string codigo;
     string data;
     int codHash;
+    bool busca;
 
     // Inserindo na QuadTree
     //Abrindo arquivo para leitura
@@ -163,10 +164,14 @@ int main(){
                 avlt->insercao(codHash);
                 avb->insert(codHash);
             }
-
-            cout << "Digite o codigo da cidade e data para busca: " << endl;
-            cin >> codigo;
-            cin >> data;
+            
+            codigo = casos[0].getCodigo();
+            cout << codigo << endl;
+            data = casos[0].getData();
+            cout << data << endl;
+            codHash = hash->funcaoHash(data, codigo);
+            busca = avlt->busca(codHash);
+            cout << "busca: " << busca << endl;
         }
         registrosAleatorios.clear();
     }
