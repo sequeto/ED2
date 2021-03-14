@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "AVLTree.h"
 #include "NodeAVL.h"
 
@@ -12,26 +13,29 @@ AVLTree::~AVLTree(){
     this->raiz = NULL;
 }
 
-bool AVLTree::busca(int info){
-    return auxBusca(this->raiz, info);
+bool AVLTree::busca(int info, Estatisticas* statistics){
+    return auxBusca(this->raiz, info, statistics);
 }
 
-bool AVLTree::auxBusca(NodeAVL* p, int info){
+bool AVLTree::auxBusca(NodeAVL* p, int info, Estatisticas* statistics){
     if(p == NULL){
         return false;
     }
 
     else if(p->getInfo() == info){
+        statistics->incrementaComparacoes();
         return true;
     }
 
     else{
         if(info < p->getInfo()){
-            return auxBusca(p->getEsq(), info);
+            statistics->incrementaComparacoes();
+            return auxBusca(p->getEsq(), info, statistics);
         }
 
         else{
-            return auxBusca(p->getDir(), info);
+            statistics->incrementaComparacoes();
+            return auxBusca(p->getDir(), info, statistics);
         }
     }
 }

@@ -33,6 +33,7 @@
 #include "Hash.h"
 #include "Data_Casos.h"
 #include "Utils.h"
+#include "Estatisticas.h"
 
 /*
 Nesta etapa, você irá comparar o desempenho da operação de busca nas estruturas
@@ -73,9 +74,9 @@ estruturas de dados que devem ser implementadas são as seguintes:
 */
 // using namespace std;
 
-int main(){
+void analise(int N,double mediaTempo, double inicio, double fim, Estatisticas* statistics, Hash* hash, vector<Data_Casos> casos){
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     Utils utils;
-    QuadTree* quadtree = new QuadTree();
     AVLTree* avlt = new AVLTree();
     ArvoreB* avb = new ArvoreB(20);
     ArvoreB* avb2 = new ArvoreB(200);
@@ -86,50 +87,79 @@ int main(){
     int codHash;
     bool busca;
 
-    // Inserindo na QuadTree
-    //Abrindo arquivo para leitura
-    ifstream coordFile("brazil_cities_coordinates.csv");
+    vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
 
-    //Verificando se o arquvio está aberto
+    cout << "Tamanho: " << N << endl;
+    shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
+
+    // Adicionando titulos aleatórios ao vetor
+    for(int j = 0; j < N; j++){
+        registrosAleatorios.push_back(casos[j]);
+    }
+
+    // Inserindo na Arvore AVL
+    for(int i = 0; i < N; i++){
+        data = casos[i].getData();
+        codigo = casos[i].getCodigo();
+        codHash = hash->funcaoHash(data, codigo);
+        avlt->insercao(codHash);
+        avb->insert(codHash);
+        avb2->insert(codHash);
+    }
+    
+    codigo = casos[0].getCodigo();
+    data = casos[0].getData();
+    codHash = hash->funcaoHash(data, codigo);
+    inicio = double(clock()) / CLOCKS_PER_SEC;
+    busca = avlt->busca(codHash, statistics);
+    fim = double(clock()) / CLOCKS_PER_SEC;
+    mediaTempo = (fim-inicio);
+    cout << "Tempo de Busca: " << mediaTempo << endl;
+    cout << statistics->getComparacoes() << endl;
+    statistics->clear();
+}
+
+int main(){
+    cout << fixed << setprecision(6);
+
+    // Estruturas
+    Utils utils;
+    QuadTree* quadtree = new QuadTree();
+    Estatisticas* statistics = new Estatisticas();
+
+    // Inserindo na QuadTree - Etapa 1
+    cout << "Etapa 1" << endl;
+    ifstream coordFile("brazil_cities_coordinates.csv");
     if(!coordFile.is_open())
     {
         cout << "erro";
         exit (1);
     }
 
-    //Vetor que guarda todos os registros do arquivo
     City* cidades = new City[5570];
-
-    //Lendo os registros e adicionando no vetor
     cout << "Lendo..." << endl;
     utils.lerArquivoCoordenadas(cidades, coordFile);
     cout << "Arquivo Lido" << endl;
     coordFile.close();
-
     utils.inserirNaQuadTree(quadtree, cidades, 5570);
+    delete [] cidades;
 
-    cout << fixed << setprecision(6);
-
-    // Seed
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-
-    // Abrindo arquivo para leitura
+    // Inserindo na Hash - Etapa 2
+    cout << "Etapa 2" << endl; 
     ifstream csvFile("brazil_covid19_cities_processado.csv");
-    ofstream out("saidaAnalise.txt");
-
     if(!csvFile.is_open()){
         cout << "erro";
         return 1;
     }
-
-    // Vector que guarda todos os registros do arquivo
     vector<Data_Casos> casos;
-
-    // Lendo os casos e adicionando no vetor
-    cout << "Lendo..." << endl;
+    Hash* hash = new Hash(1431489);
     utils.lerArquivoProcessado(&casos, csvFile);
-    cout << "Arquivo Lido" << endl;
-    csvFile.close();
+    for(int i = 0; i < 1431489; i++){
+        hash->insere(&casos[i]);
+    }
+
+    // Arquivo para registro das métricas
+    ofstream out("saidaAnalise.txt");
 
     // Análise
     double inicio, fim;
@@ -138,42 +168,10 @@ int main(){
 
     double mediaTempo = 0;
 
-    vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
-    Hash* hash;
-
-    for(int i = 0; i < M; i++){
+    for(int i = 0; i< M; i++){
         for(int j = 0; j < M; j++){
-            out << "Tamanho: " << N[i] << endl;
-            hash = new Hash(N[i]);
-
-            shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
-
-            // Adicionando titulos aleatórios ao vetor
-            for(int j = 0; j < N[i]; j++){
-                registrosAleatorios.push_back(casos[j]);
-            }
-
-            for(int j = 0; j < N[i]; j++){
-                hash->insere(&casos[j]);
-            }
-
-            for(int i = 0; i < N[i]; i++){
-                data = casos[i].getData();
-                codigo = casos[i].getCodigo();
-                codHash = hash->funcaoHash(data, codigo);
-                avlt->insercao(codHash);
-                avb->insert(codHash);
-            }
-            
-            codigo = casos[0].getCodigo();
-            cout << codigo << endl;
-            data = casos[0].getData();
-            cout << data << endl;
-            codHash = hash->funcaoHash(data, codigo);
-            busca = avlt->busca(codHash);
-            cout << "busca: " << busca << endl;
+            analise(N[i], mediaTempo, inicio, fim, statistics, hash, casos);
         }
-        registrosAleatorios.clear();
-    }
-    
+        statistics->clear();
+    }    
 }

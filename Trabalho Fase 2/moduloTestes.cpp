@@ -59,7 +59,7 @@ void teste(int N, int opcao){
     }
 }
 
-int moduloTeste(){
+int modulo(){
     int opcao=0;
     while(opcao != -1){
         cout << "Selecione Uma Opcao: " << endl;

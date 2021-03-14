@@ -200,8 +200,6 @@ void Testes::testeAVL(int n)
     }
 
     if(n > 20){
-        // ofstream out("saidaN100-moduloTeste.txt");
-        // quadtree->imprime();
     }
     
     // Leitura finalizada

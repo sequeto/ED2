@@ -2,6 +2,8 @@
 #define AVLTREE_H_INCLUDED
 
 #include "NodeAVL.h"
+#include "Estatisticas.h"
+#include <fstream>
 
 class AVLTree{
     public:
@@ -9,14 +11,14 @@ class AVLTree{
         virtual ~AVLTree();   
         
         int getAltura();
-        bool busca(int info);
+        bool busca(int info, Estatisticas* statistics);
         void insercao(int info);
         void imprime();
         NodeAVL* verificaBalanceamento(NodeAVL* p);
 
     private:
         NodeAVL* raiz;
-        bool auxBusca(NodeAVL* p, int info);
+        bool auxBusca(NodeAVL* p, int info, Estatisticas* statistics);
         int auxGetAltura(NodeAVL* p);
         NodeAVL* auxInsercao(NodeAVL* p, NodeAVL* pai, int info);
 
