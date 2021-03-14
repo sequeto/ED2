@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include "Hash.h"
 #include "Data_Casos.h"
 
@@ -21,14 +23,13 @@ Hash::~Hash() {
 }
 
 int Hash::funcaoHash(string data, string codigo){
-    int cod = stoi(codigo);
+    long long int cod = stol(codigo);
     data.replace(4,1,"");
     data.replace(6,1,"");
-    int dataConv = stoi(data);
+    long long int dataConv = stol(data);
 
-
-    int soma = (cod + dataConv);
-    int index = (soma % this->tamanho);
+    long long int chave = (cod + dataConv) * (cod + dataConv);
+    long long int index = (chave % this->tamanho);
     return index;
 }
 

@@ -6,34 +6,34 @@ using namespace std;
 
 class Estatisticas
 {
-public:
+    public:
 
-    Estatisticas()
-    {
-        qntComparacoes = 0;
-    }
+        Estatisticas()
+        {
+            qntComparacoes = 0;
+        }
 
-    ~Estatisticas()
-    {
-        qntComparacoes = 0;
-    }
-    
-    void incrementaComparacoes()
-    {
-        qntComparacoes++;
-    }
+        ~Estatisticas()
+        {
+            qntComparacoes = 0;
+        }
+        
+        void incrementaComparacoes()
+        {
+            qntComparacoes++;
+        }
 
-    int getComparacoes()
-    {
-        return qntComparacoes;
-    }
+        int getComparacoes()
+        {
+            return qntComparacoes;
+        }
 
-    void clear()
-    {
-        qntComparacoes = 0;
-    }
-private:
-    int qntComparacoes;
+        void clear()
+        {
+            qntComparacoes = 0;
+        }
+    private:
+        int qntComparacoes;
 };
 
 #endif // DADOSORDENACAO_H_INCLUDED

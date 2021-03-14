@@ -74,7 +74,7 @@ estruturas de dados que devem ser implementadas são as seguintes:
 */
 // using namespace std;
 
-void analise(int N,double mediaTempo, double inicio, double fim, Estatisticas* statistics, Hash* hash, vector<Data_Casos> casos){
+void analiseBusca1(int N,double mediaTempo, double inicio, double fim, Estatisticas* statistics, Hash* hash, vector<Data_Casos> casos){
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     Utils utils;
     AVLTree* avlt = new AVLTree();
@@ -86,6 +86,7 @@ void analise(int N,double mediaTempo, double inicio, double fim, Estatisticas* s
     string data;
     int codHash;
     bool busca;
+
 
     vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
 
@@ -107,20 +108,72 @@ void analise(int N,double mediaTempo, double inicio, double fim, Estatisticas* s
         avb2->insert(codHash);
     }
     
-    codigo = casos[0].getCodigo();
-    data = casos[0].getData();
-    codHash = hash->funcaoHash(data, codigo);
-    inicio = double(clock()) / CLOCKS_PER_SEC;
-    busca = avlt->busca(codHash, statistics);
-    fim = double(clock()) / CLOCKS_PER_SEC;
-    mediaTempo = (fim-inicio);
-    cout << "Tempo de Busca: " << mediaTempo << endl;
-    cout << statistics->getComparacoes() << endl;
-    statistics->clear();
+    for(int i = 0; i < 5; i++){
+        codigo = casos[i].getCodigo();
+        data = casos[i].getData();
+        codHash = hash->funcaoHash(data, codigo);
+        inicio = double(clock()) / CLOCKS_PER_SEC;
+        busca = avlt->busca(codHash, statistics);
+        fim = double(clock()) / CLOCKS_PER_SEC;
+        mediaTempo = (fim-inicio);
+        cout << "Tempo de Busca: " << mediaTempo << endl;
+        cout << statistics->getComparacoes() << endl;
+        statistics->clear();
+        mediaTempo = 0;
+    }
+
+    delete avlt;
+    delete avb;
+    delete avb2;
 }
 
+// void analiseBusca2(int x0, int x1, int y0, int y1,QuadTree* qt, int N,double mediaTempo, double inicio, double fim, Estatisticas* statistics, Hash* hash, vector<Data_Casos> casos){
+//     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+//     Utils utils;
+//     AVLTree* avlt = new AVLTree();
+//     ArvoreB* avb = new ArvoreB(20);
+//     ArvoreB* avb2 = new ArvoreB(200);
+
+//     // Variaveis auxiliares
+//     string codigo;
+//     string data;
+//     int codHash;
+//     bool busca;
+
+//     vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
+
+//     cout << "Tamanho: " << N << endl;
+//     shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
+
+//     // Adicionando titulos aleatórios ao vetor
+//     for(int j = 0; j < N; j++){
+//         registrosAleatorios.push_back(casos[j]);
+//     }
+
+//     // Inserindo na Arvore AVL
+//     for(int i = 0; i < N; i++){
+//         data = casos[i].getData();
+//         codigo = casos[i].getCodigo();
+//         codHash = hash->funcaoHash(data, codigo);
+//         avlt->insercao(codHash);
+//         avb->insert(codHash);
+//         avb2->insert(codHash);
+//     }
+    
+//     codigo = casos[0].getCodigo();
+//     data = casos[0].getData();
+//     codHash = hash->funcaoHash(data, codigo);
+//     inicio = double(clock()) / CLOCKS_PER_SEC;
+//     busca = avlt->busca(codHash, statistics);
+//     fim = double(clock()) / CLOCKS_PER_SEC;
+//     mediaTempo = (fim-inicio);
+//     cout << "Tempo de Busca: " << mediaTempo << endl;
+//     cout << statistics->getComparacoes() << endl;
+//     statistics->clear();
+// }
+
 int main(){
-    cout << fixed << setprecision(6);
+    cout << fixed << setprecision(9);
 
     // Estruturas
     Utils utils;
@@ -157,6 +210,7 @@ int main(){
     for(int i = 0; i < 1431489; i++){
         hash->insere(&casos[i]);
     }
+    cout << "pronto" << endl;
 
     // Arquivo para registro das métricas
     ofstream out("saidaAnalise.txt");
@@ -169,9 +223,12 @@ int main(){
     double mediaTempo = 0;
 
     for(int i = 0; i< M; i++){
-        for(int j = 0; j < M; j++){
-            analise(N[i], mediaTempo, inicio, fim, statistics, hash, casos);
-        }
+        analiseBusca1(N[i], mediaTempo, inicio, fim, statistics, hash, casos);
+        // analiseBusca2(-16.7573,-8.72073,-49.4412, -39.1162,quadtree,N[i], mediaTempo, inicio, fim, statistics, hash, casos);
+        out << "Tamanho: " << N[0] << endl;
+        out << "Tempo De Busca: " << mediaTempo << endl;
+        out << "Comparações: " << statistics->getComparacoes() << endl;
         statistics->clear();
+        mediaTempo = 0;
     }    
 }

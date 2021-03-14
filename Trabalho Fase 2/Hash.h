@@ -14,7 +14,7 @@ class Hash
     
 
     private:
-        int tamanho;
+        long long int tamanho;
         ListaEncad** registros;
 };
 
