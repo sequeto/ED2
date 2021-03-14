@@ -172,7 +172,7 @@ void analiseBusca1(int N,double mediaTempo, double inicio, double fim, Estatisti
 //     statistics->clear();
 // }
 
-int main(){
+bool analise(){
     cout << fixed << setprecision(9);
 
     // Estruturas
@@ -230,5 +230,7 @@ int main(){
         out << "Comparações: " << statistics->getComparacoes() << endl;
         statistics->clear();
         mediaTempo = 0;
-    }    
+    }
+
+    return true; 
 }

@@ -14,7 +14,6 @@
     WINDOWS:    cls & g++ -std=c++11 *.h *.cpp  -o main & main brazil_covid19_cities.csv
 */
 
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -59,7 +58,7 @@ void teste(int N, int opcao){
     }
 }
 
-int modulo(){
+bool modulo(){
     int opcao=0;
     while(opcao != -1){
         cout << "Selecione Uma Opcao: " << endl;
@@ -79,5 +78,5 @@ int modulo(){
         cin >> opcao;
    }     
 
-   return 0;  
+   return true;  
 }
