@@ -10,8 +10,8 @@
     JOÃO PEDRO SEQUETO NASCIMENTO  MAT 201776022
     main.cpp
     *** comando pra rodar ***
-    MAC/LINUX:  clear && g++ -std=c++11 *.h *.cpp  -o main && ./main brazil_covid19_cities.csv
-    WINDOWS:    cls & g++ -std=c++11 *.h *.cpp  -o main & main brazil_covid19_cities.csv
+    MAC/LINUX:  clear && g++ -std=c++11 *.h *.cpp  -o main && ./main
+    WINDOWS:    cls & g++ -std=c++11 *.h *.cpp  -o main & main
 */
 
 #include <iostream>
