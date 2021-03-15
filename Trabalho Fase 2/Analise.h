@@ -34,6 +34,7 @@
 #include "Data_Casos.h"
 #include "Utils.h"
 #include "Estatisticas.h"
+#include "Contador.h"
 
 /*
 Nesta etapa, você irá comparar o desempenho da operação de busca nas estruturas
@@ -74,7 +75,7 @@ estruturas de dados que devem ser implementadas são as seguintes:
 */
 // using namespace std;
 
-void analiseBusca1(int N,double mediaTempo, double inicio, double fim, Estatisticas* statistics, Hash* hash, vector<Data_Casos> casos){
+void analiseBusca1(double* tempoInsercaoB20, double* tempoInsercaoB200, double* tempoBuscaB20, double* tempoBuscaB200, int* comparacoesB20,int* comparacoesB200, double* mediaTempo,double* mediaTempoBusca, int* mediaCompBusca, int* mediaComp, int N,double tempo, double inicio, double fim, Estatisticas* statistics, Estatisticas* statisticsBusca, Hash* hash, vector<Data_Casos> casos){
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     Utils utils;
     AVLTree* avlt = new AVLTree();
@@ -87,7 +88,6 @@ void analiseBusca1(int N,double mediaTempo, double inicio, double fim, Estatisti
     int codHash;
     bool busca;
 
-
     vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
 
     cout << "Tamanho: " << N << endl;
@@ -98,79 +98,74 @@ void analiseBusca1(int N,double mediaTempo, double inicio, double fim, Estatisti
         registrosAleatorios.push_back(casos[j]);
     }
 
-    // Inserindo na Arvore AVL
+    // Inserções
     for(int i = 0; i < N; i++){
         data = casos[i].getData();
         codigo = casos[i].getCodigo();
         codHash = hash->funcaoHash(data, codigo);
-        avlt->insercao(codHash);
+
+        inicio = double(clock()) / CLOCKS_PER_SEC;
+        avlt->insercao(codHash, statistics);
+        fim = double(clock()) / CLOCKS_PER_SEC;
+        *mediaComp +=  statistics->getComparacoes();
+        statistics->clear();
+        tempo = (fim-inicio);
+        *mediaTempo += tempo;
+
+        inicio = double(clock()) / CLOCKS_PER_SEC;
         avb->insert(codHash);
+        fim = double(clock()) / CLOCKS_PER_SEC;
+        tempo = (fim-inicio);
+        *tempoInsercaoB20 += tempo;
+
+        inicio = double(clock()) / CLOCKS_PER_SEC;
         avb2->insert(codHash);
+        fim = double(clock()) / CLOCKS_PER_SEC;
+        tempo = (fim-inicio);
+        *tempoInsercaoB200 += tempo;
     }
     
+    // buscas
     for(int i = 0; i < 5; i++){
         codigo = casos[i].getCodigo();
         data = casos[i].getData();
         codHash = hash->funcaoHash(data, codigo);
         inicio = double(clock()) / CLOCKS_PER_SEC;
-        busca = avlt->busca(codHash, statistics);
+        busca = avlt->busca(codHash, statisticsBusca);
         fim = double(clock()) / CLOCKS_PER_SEC;
-        mediaTempo = (fim-inicio);
-        cout << "Tempo de Busca: " << mediaTempo << endl;
-        cout << statistics->getComparacoes() << endl;
+        tempo = (fim-inicio);
+        *mediaTempoBusca += tempo;
+        *mediaCompBusca += statisticsBusca->getComparacoes();
         statistics->clear();
-        mediaTempo = 0;
+
+        inicio = double(clock()) / CLOCKS_PER_SEC;
+        avb->procura(codHash);
+        fim = double(clock()) / CLOCKS_PER_SEC;
+        tempo = (fim-inicio);
+        *tempoBuscaB20 += tempo;
+        *comparacoesB20 += Contador::getInstance().getNumComparacoes();
+
+        inicio = double(clock()) / CLOCKS_PER_SEC;
+        avb2->procura(codHash);
+        fim = double(clock()) / CLOCKS_PER_SEC;
+        tempo = (fim-inicio);
+        *tempoBuscaB200 += tempo;
+        *comparacoesB200 += Contador::getInstance().getNumComparacoes();
     }
+
+    *mediaTempoBusca = *mediaTempoBusca/5;
+    *mediaCompBusca = *mediaCompBusca/5;
+
+    *tempoBuscaB20 = *tempoBuscaB20/5;
+    *comparacoesB20 = *comparacoesB20/5;
+
+    *tempoBuscaB200 = *tempoBuscaB200/5;
+    *comparacoesB200 = *comparacoesB200/5;
 
     delete avlt;
     delete avb;
     delete avb2;
 }
-
-// void analiseBusca2(int x0, int x1, int y0, int y1,QuadTree* qt, int N,double mediaTempo, double inicio, double fim, Estatisticas* statistics, Hash* hash, vector<Data_Casos> casos){
-//     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-//     Utils utils;
-//     AVLTree* avlt = new AVLTree();
-//     ArvoreB* avb = new ArvoreB(20);
-//     ArvoreB* avb2 = new ArvoreB(200);
-
-//     // Variaveis auxiliares
-//     string codigo;
-//     string data;
-//     int codHash;
-//     bool busca;
-
-//     vector<Data_Casos> registrosAleatorios; // Número de Registros aleatórios.
-
-//     cout << "Tamanho: " << N << endl;
-//     shuffle (casos.begin(), casos.end(), default_random_engine(seed)); // Embaralha todo o vetor de registros
-
-//     // Adicionando titulos aleatórios ao vetor
-//     for(int j = 0; j < N; j++){
-//         registrosAleatorios.push_back(casos[j]);
-//     }
-
-//     // Inserindo na Arvore AVL
-//     for(int i = 0; i < N; i++){
-//         data = casos[i].getData();
-//         codigo = casos[i].getCodigo();
-//         codHash = hash->funcaoHash(data, codigo);
-//         avlt->insercao(codHash);
-//         avb->insert(codHash);
-//         avb2->insert(codHash);
-//     }
-    
-//     codigo = casos[0].getCodigo();
-//     data = casos[0].getData();
-//     codHash = hash->funcaoHash(data, codigo);
-//     inicio = double(clock()) / CLOCKS_PER_SEC;
-//     busca = avlt->busca(codHash, statistics);
-//     fim = double(clock()) / CLOCKS_PER_SEC;
-//     mediaTempo = (fim-inicio);
-//     cout << "Tempo de Busca: " << mediaTempo << endl;
-//     cout << statistics->getComparacoes() << endl;
-//     statistics->clear();
-// }
 
 bool analise(){
     cout << fixed << setprecision(9);
@@ -179,6 +174,22 @@ bool analise(){
     Utils utils;
     QuadTree* quadtree = new QuadTree();
     Estatisticas* statistics = new Estatisticas();
+    Estatisticas* statisticsBusca = new Estatisticas();
+
+    int mediaCompBusca = 0;
+    int mediaComp = 0;
+
+    double mediaTempoBusca = 0;
+    double mediaTempo = 0;
+
+    int comparacoesB20 = 0;
+    int comparacoesB200 = 0;
+
+    double tempoInsercaoB20 = 0;
+    double tempoInsercaoB200 = 0;
+
+    double tempoBuscaB20 = 0;
+    double tempoBuscaB200 = 0;
 
     // Inserindo na QuadTree - Etapa 1
     cout << "Etapa 1" << endl;
@@ -218,18 +229,50 @@ bool analise(){
     // Análise
     double inicio, fim;
     int M = 5;
-    int N[5] = {10000, 50000, 100000, 500000, 1000000};
+    int N[5] = {1000, 5000, 10000, 50000, 100000};
 
-    double mediaTempo = 0;
+    double tempo = 0;
 
     for(int i = 0; i< M; i++){
-        analiseBusca1(N[i], mediaTempo, inicio, fim, statistics, hash, casos);
-        // analiseBusca2(-16.7573,-8.72073,-49.4412, -39.1162,quadtree,N[i], mediaTempo, inicio, fim, statistics, hash, casos);
-        out << "Tamanho: " << N[0] << endl;
-        out << "Tempo De Busca: " << mediaTempo << endl;
-        out << "Comparações: " << statistics->getComparacoes() << endl;
+        analiseBusca1(&tempoInsercaoB20, &tempoInsercaoB200, &tempoBuscaB20, &tempoBuscaB200, &comparacoesB20, &comparacoesB200,&mediaTempo, &mediaTempoBusca, &mediaCompBusca, &mediaComp, N[i], tempo, inicio, fim, statistics, statisticsBusca, hash, casos);
+        out << "Tamanho: " << N[i] << endl;
+        out << "Tempo De Busca AVL: " << mediaTempoBusca << endl;
+        cout << "Tempo De Busca AVL: " << mediaTempoBusca << endl;
+        out << "Comparacoes na busca AVL: " << mediaCompBusca << endl;
+        cout << "Comparacoes na busca AVL: " << mediaCompBusca << endl;
+        out << "Tempo De Insercao AVL: " << mediaTempo << endl;
+        cout << "Tempo De Insercao AVL: " << mediaTempo << endl;
+        out << "Comparacoes na insercao AVL: " << mediaComp << endl;
+        cout << "Comparacoes na insercao AVL: " << mediaComp << endl;
         statistics->clear();
         mediaTempo = 0;
+        mediaComp = 0;
+        mediaTempoBusca = 0;
+        mediaCompBusca = 0;
+
+        cout << endl;
+        out << "Tamanho: " << N[i] << endl;
+        out << "Tempo De Busca B(20): " << tempoBuscaB20 << endl;
+        cout << "Tempo De Busca B(20): " << tempoBuscaB20 << endl;
+        out << "Comparacoes B(20): " << comparacoesB20 << endl;
+        cout << "Comparacoes B(20): " << comparacoesB20 << endl;
+        out << "Tempo De Insercao B(20): " << tempoInsercaoB20 << endl;
+        cout << "Tempo De Insercao B(20): " << tempoInsercaoB20 << endl;
+        tempoBuscaB20 = 0;
+        tempoInsercaoB20 = 0;
+        comparacoesB20 = 0;
+
+        cout << endl;
+        out << "Tamanho: " << N[i] << endl;
+        out << "Tempo De Busca B(200): " << tempoBuscaB200 << endl;
+        cout << "Tempo De Busca B(200): " << tempoBuscaB200 << endl;
+        out << "Comparacoes B(200): " << comparacoesB200 << endl;
+        cout << "Comparacoes B(200): " << comparacoesB200 << endl;
+        out << "Tempo De Insercao B(200): " << tempoInsercaoB200 << endl;
+        cout << "Tempo De Insercao B(200): " << tempoInsercaoB200 << endl;
+        tempoBuscaB200 = 0;
+        tempoInsercaoB200 = 0;
+        comparacoesB200 = 0;
     }
 
     return true; 

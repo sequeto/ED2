@@ -78,13 +78,14 @@ int AVLTree::auxGetAltura(NodeAVL* p){
 }
 
 // Insere um elemento na árvore com o valor definido
-void AVLTree::insercao(int value){
-    this->raiz = auxInsercao(this->raiz, NULL, value);
+void AVLTree::insercao(int value, Estatisticas* statistics){
+    this->raiz = auxInsercao(this->raiz, NULL, value, statistics);
 }
 
 // -----------------------------------------------------------
-NodeAVL* AVLTree::auxInsercao(NodeAVL* p, NodeAVL* pai, int value){
+NodeAVL* AVLTree::auxInsercao(NodeAVL* p, NodeAVL* pai, int value, Estatisticas* statistics){
     if(p == NULL){
+        statistics->incrementaComparacoes();
         p = new NodeAVL();
         p->setInfo(value);
         p->setEsq(NULL);
@@ -94,10 +95,12 @@ NodeAVL* AVLTree::auxInsercao(NodeAVL* p, NodeAVL* pai, int value){
 
     else {
         if(value < p->getInfo()){
-            p->setEsq(auxInsercao(p->getEsq(), p,  value));
+            statistics->incrementaComparacoes();
+            p->setEsq(auxInsercao(p->getEsq(), p,  value, statistics));
         }
         else{
-            p->setDir(auxInsercao(p->getDir(), p, value));
+            statistics->incrementaComparacoes();
+            p->setDir(auxInsercao(p->getDir(), p, value, statistics));
         }
     }
 

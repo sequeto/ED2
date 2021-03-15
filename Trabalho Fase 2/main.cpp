@@ -47,9 +47,9 @@ void prefacioTrabalho() ///Capa do trabalho
     cout << "Trabalho de Estrutura de Dados 2 (UFJF/ICE/DCC) 2020.3(ERE)" << endl;
     cout << "Grupo:" << endl;
     cout << "BEATRIZ CUNHA RODRIGUES - MAT 201776038 "<<endl;
-    cout << "IVANYLSON HONORIO GONÇALVES - MAT 201776002" <<endl;
-    cout << "JOÃO PEDRO SEQUETO NASCIMENTO - MAT 201776022 "<< endl;
-    cout << "Observação: Para executar o código segue abaixo: " << endl;
+    cout << "IVANYLSON HONORIO GONCALVES - MAT 201776002" <<endl;
+    cout << "JOAO PEDRO SEQUETO NASCIMENTO - MAT 201776022 "<< endl;
+    cout << "Observacao: Para executar o código segue abaixo: " << endl;
     cout << "MAC/LINUX:  clear && g++ -std=c++11 *.h *.cpp -o main && ./main  " << endl;
     cout << "WINDOWS:    cls & g++ -std=c++11 *h *.cpp -o main & main " << endl;
     cout <<endl;
@@ -64,8 +64,8 @@ void mainMenu() ///Menu contendo o que foi pedido no relatório
 
         cout << "Qual das partes do trabalho voce quer executar?" << endl;
         cout << "(1) -  Modulo de Testes:" << endl;
-        cout << "(2) -  Análise das estruturas balanceadas:" << endl;
-        cout << "(-1) - Para a saída " << endl;
+        cout << "(2) -  Analise das estruturas balanceadas:" << endl;
+        cout << "(-1) - Para a saida " << endl;
         cout << "Numero	 desejado: ";
         cin >> opcaoN; /// Ler a opção N
         cout << endl;

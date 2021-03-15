@@ -16,6 +16,7 @@
 #include "Hash.h"
 #include "Utils.h"
 #include "Testes.h"
+#include "Contador.h"
 
 using namespace std;
 
@@ -150,6 +151,7 @@ void Testes::testeHash(int n)
 
 void Testes::testeAVL(int n)
 {
+    Estatisticas* statistics = new Estatisticas();
     Utils utils;
     AVLTree avlt;
     string codigo;
@@ -192,7 +194,7 @@ void Testes::testeAVL(int n)
         codigo = registrosAleatorios[j].getCodigo();
         data = registrosAleatorios[j].getData();
         codHash = hash->funcaoHash(data, codigo);
-        avlt.insercao(codHash);
+        avlt.insercao(codHash, statistics);
     }
 
     if(n < 20){

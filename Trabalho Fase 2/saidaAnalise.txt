@@ -1,0 +1,65 @@
+Tamanho: 1000
+Tempo De Busca AVL: 0
+Comparacoes na busca AVL: 22
+Tempo De Insercao AVL: 0.015
+Comparacoes na insercao AVL: 9688
+Tamanho: 1000
+Tempo De Busca B(20): 0
+Comparacoes B(20): 146759
+Tempo De Insercao B(20): 0
+Tamanho: 1000
+Tempo De Busca B(200): 0
+Comparacoes B(200): 146759
+Tempo De Insercao B(200): 0.002
+Tamanho: 5000
+Tempo De Busca AVL: 0
+Comparacoes na busca AVL: 53
+Tempo De Insercao AVL: 0.796
+Comparacoes na insercao AVL: 60657
+Tamanho: 5000
+Tempo De Busca B(20): 0
+Comparacoes B(20): 1000744
+Tempo De Insercao B(20): 0.004
+Tamanho: 5000
+Tempo De Busca B(200): 0
+Comparacoes B(200): 1000744
+Tempo De Insercao B(200): 0.004
+Tamanho: 10000
+Tempo De Busca AVL: 0
+Comparacoes na busca AVL: 78
+Tempo De Insercao AVL: 2.296
+Comparacoes na insercao AVL: 130557
+Tamanho: 10000
+Tempo De Busca B(20): 0
+Comparacoes B(20): 2788746
+Tempo De Insercao B(20): 0.011
+Tamanho: 10000
+Tempo De Busca B(200): 0
+Comparacoes B(200): 2788746
+Tempo De Insercao B(200): 0.01
+Tamanho: 50000
+Tempo De Busca AVL: 0
+Comparacoes na busca AVL: 112
+Tempo De Insercao AVL: 145.525
+Comparacoes na insercao AVL: 775194
+Tamanho: 50000
+Tempo De Busca B(20): 0
+Comparacoes B(20): 14233121
+Tempo De Insercao B(20): 0.06
+Tamanho: 50000
+Tempo De Busca B(200): 0
+Comparacoes B(200): 14233121
+Tempo De Insercao B(200): 0.121
+Tamanho: 100000
+Tempo De Busca AVL: 0
+Comparacoes na busca AVL: 135
+Tempo De Insercao AVL: 762.3
+Comparacoes na insercao AVL: 1653953
+Tamanho: 100000
+Tempo De Busca B(20): 0
+Comparacoes B(20): 41690113
+Tempo De Insercao B(20): 0.182
+Tamanho: 100000
+Tempo De Busca B(200): 0
+Comparacoes B(200): 41690113
+Tempo De Insercao B(200): 0.331
